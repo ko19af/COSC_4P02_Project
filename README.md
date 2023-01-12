@@ -5,9 +5,9 @@ TITLE:
 
 MEMBERS:
 * Kevin Olenic (6814974)
-* Darshakkumar Bambharoliya ()
 * Riley Benson ()
 * Connor Vrieswyk ()
+* Salman Saeed ()
 * William McCormick ()
 
 PROJECT SUMMARY:
