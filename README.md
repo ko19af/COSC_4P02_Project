@@ -6,7 +6,7 @@ TITLE:
 MEMBERS:
 * Kevin Olenic (6814974)
 * Riley Benson ()
-* Connor Vrieswyk ()
+* Connor Vrieswyk (6669345)
 * Salman Saeed ()
 * William McCormick (6652762)
 
