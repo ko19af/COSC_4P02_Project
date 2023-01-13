@@ -8,6 +8,6 @@ MEMBERS:
 * Riley Benson ()
 * Connor Vrieswyk ()
 * Salman Saeed ()
-* William McCormick ()
+* William McCormick (6652762)
 
 PROJECT SUMMARY:
