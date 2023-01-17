@@ -5,9 +5,9 @@ TITLE: Interactive map for Museum Assistance Application (M.A.P)
 
 MEMBERS:
 * Kevin Olenic (6814974)
-* Riley Benson ()
+* Riley Benson (6360507)
 * Connor Vrieswyk (6669345)
-* Salman Saeed ()
+* Salman Saeed (6479018)
 * William McCormick (6652762)
 
 PROJECT SUMMARY:
