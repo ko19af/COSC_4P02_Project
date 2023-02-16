@@ -98,10 +98,11 @@
   
   if(map[position] == 1){
   
-  	alert (position + " white block");
+  	map[position] = 0;
   
-  }else alert(position + " black block");
+  }else map[position] = 1;
   
+  drawMap();
   };
 
   window.addEventListener("resize", resize, {passive:true});
