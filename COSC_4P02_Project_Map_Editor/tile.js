@@ -1,6 +1,6 @@
 (function() {
 
-  var buffer, context, controller, drawMap, loop, map, output, size;
+  var buffer, context, controller, drawMap, loop, map, output, size, tile_x, tile_y, value;
 
   buffer = document.createElement("canvas").getContext("2d");
   context = document.querySelector("canvas").getContext("2d");
@@ -11,7 +11,7 @@
   buffer.canvas.width = 16 * size;
   buffer.canvas.height = 9 * size;
 
-  map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+  map = [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
          1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
          1,0,1,1,0,1,1,0,1,1,1,0,1,1,1,1,
          1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,
@@ -44,7 +44,7 @@
 
     for (let index = 0; index < map.length; index ++) {
 
-      buffer.fillStyle = (map[index] == 1)?"#228b22":"#b0e0b6";
+      buffer.fillStyle = (map[index] == 1)?"#FFFFFF":"#000000";
       buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
 
     }
@@ -52,8 +52,6 @@
   };
 
   loop = function(time_stamp) {
-
-    var tile_x, tile_y, value;
 
     tile_x = Math.floor(controller.pointer_x / (context.canvas.width/16));
     tile_y = Math.floor(controller.pointer_y / (context.canvas.height/9));
@@ -88,12 +86,29 @@
     drawMap();
 
   };
+  
+  function changeColor() {
+  var position = tile_x;
+  
+  for (var i = 0; i < tile_y; i++) {
+  
+   position += 16;
+  
+  }
+  
+  if(map[position] == 1){
+  
+  	alert (position + " white block");
+  
+  }else alert(position + " black block");
+  
+  };
 
   window.addEventListener("resize", resize, {passive:true});
   context.canvas.addEventListener("mousemove", controller.move);
   context.canvas.addEventListener("touchmove", controller.move, {passive:true});
   context.canvas.addEventListener("touchstart", controller.move, {passive:true});
-  context.canvas.addEventListener("click", function() {alert("Tile will change color");});
+  context.canvas.addEventListener("click", changeColor);
   resize();
 
   window.requestAnimationFrame(loop);
