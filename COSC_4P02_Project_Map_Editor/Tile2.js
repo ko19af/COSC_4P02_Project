@@ -1,6 +1,8 @@
+var map;
+
 (function() {
 
-  var buffer, context, controller, drawMap, loop, map, output, size, tile_x, tile_y, value;
+  var buffer, context, controller, drawMap, loop, output, size, tile_x, tile_y, value;
   const info = new Map();
   
   buffer = document.createElement("canvas").getContext("2d");
@@ -27,48 +29,32 @@
     // mouse or finger position
     pointer_x:0,
     pointer_y:0,
-
     move:function(event) {
-
       // This will give us the location of our canvas element on screen
       var rectangle = context.canvas.getBoundingClientRect();
-
       // store the position of the move event inside the pointer variables
       controller.pointer_x = event.clientX - rectangle.left;
       controller.pointer_y = event.clientY - rectangle.top;
-
     }
-
   };
 
   drawMap = function() {
-
     for (let index = 0; index < map.length; index ++) {
-
       buffer.fillStyle = (map[index] == 0)?"#FFFFFF":"#000000";
       buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
-
     }
-
   };
 
   loop = function(time_stamp) {
-
     tile_x = Math.floor(controller.pointer_x / (context.canvas.width/16));
     tile_y = Math.floor(controller.pointer_y / (context.canvas.height/9));
     value = map[tile_y * 16 + tile_x];
-
     drawMap();
-
     buffer.fillStyle = "rgba(128, 128, 128, 0.5)";
     buffer.fillRect(tile_x * size, tile_y * size, size, size);
-
     context.drawImage(buffer.canvas, 0, 0, buffer.canvas.width, buffer.canvas.height, 0, 0, context.canvas.width, context.canvas.height);
-
     output.innerHTML = "tile_x: " + tile_x + "<br>tile_y: " + tile_y + "<br>value: " + value;
-
     window.requestAnimationFrame(loop);
-
   };
 
   // just keeps the canvas element sized appropriately
@@ -82,6 +68,11 @@
   };
   
   function groupTiles() {// this function lets a user select the tiles they will add info to
+  const eInfo = {
+  eName: "pre-american history",
+  location: "South Wing",
+  eED: 2024-04-01,
+};
   var position = tile_x;// store tiles x-position
   for (var i = 0; i < tile_y; i++) {// for every row
    position += 16;//add 16 tiles to adjust position in array
@@ -92,9 +83,9 @@
   }
   
   else {// if select are that is not wall
-  	info.set(position, position);// let user add info to area
-  	alert(info.get(position));
-  }
+  	info.set(position, eInfo);// let user add info to area
+  	alert(info.get(position).eName);
+  	}
   };
 
   window.addEventListener("resize", resize, {passive:true});
@@ -107,3 +98,14 @@
   window.requestAnimationFrame(loop);
 
 })();
+
+function myFunction() {
+let text;
+let entry = prompt("Enter Map info:", "westWing");
+if(entry == null || entry == ""){
+text = "User cancelled the prompt.";
+} else {
+    text = "location designated as " + entry + " this is where the exhibit is located";
+  }
+  document.getElementById("test").innerHTML = text;
+}
