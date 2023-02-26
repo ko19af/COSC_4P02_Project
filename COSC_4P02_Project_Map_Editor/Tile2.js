@@ -1,9 +1,8 @@
-var map;
+var map, tile_x;
+const info = new Map();
 
 (function() {
-
-  var buffer, context, controller, drawMap, loop, output, size, tile_x, tile_y, value;
-  const info = new Map();
+  var buffer, context, controller, drawMap, loop, output, size, tile_y, value;
   
   buffer = document.createElement("canvas").getContext("2d");
   context = document.querySelector("canvas").getContext("2d");
@@ -99,13 +98,17 @@ var map;
 
 })();
 
-function myFunction() {
+function enterInfo() {
 let text;
+var position = tile_x;// store tiles x-position
+  for (var i = 0; i < tile_y; i++) {// for every row
+   position += 16;//add 16 tiles to adjust position in array
+  }
 let entry = prompt("Enter Map info:", "westWing");
 if(entry == null || entry == ""){
 text = "User cancelled the prompt.";
 } else {
-    text = "location designated as " + entry + " this is where the exhibit is located";
+    text = "location designated as " + info.get(position).eName + " this is where the exhibit is located";
   }
   document.getElementById("test").innerHTML = text;
 }
