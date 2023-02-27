@@ -2,6 +2,7 @@ var map, tile_x;
 const info = new Map();
 
 (function() {
+
   var buffer, context, controller, drawMap, loop, output, size, tile_y, value;
   
   buffer = document.createElement("canvas").getContext("2d");
@@ -66,11 +67,12 @@ const info = new Map();
     drawMap();
   };
   
-  function groupTiles() {// this function lets a user select the tiles they will add info to
+  function groupTiles() {// this function lets a user select the tiles they will add info to (NEEDS WORK!!!!!)
   const eInfo = {
   eName: "pre-american history",
   location: "South Wing",
   eED: 2024-04-01,
+  floorNum: "2",
 };
   var position = tile_x;// store tiles x-position
   for (var i = 0; i < tile_y; i++) {// for every row
@@ -98,7 +100,7 @@ const info = new Map();
 
 })();
 
-function enterInfo() {
+function enterInfo() {// NEEDS WORK !!!
 let text;
 var position = tile_x;// store tiles x-position
   for (var i = 0; i < tile_y; i++) {// for every row
@@ -112,3 +114,14 @@ text = "User cancelled the prompt.";
   }
   document.getElementById("test").innerHTML = text;
 }
+
+function sumbitInfo(form) {	
+var value= document.getElementsByName('wing');
+var wing;
+for (var radio of value){
+if (radio.checked) {    
+            wing = radio.value;
+                    }
+ }
+ alert(form.eName.value  + " " + form.eED.vlaue + " " + form.floor.value + " " + wing);
+};
