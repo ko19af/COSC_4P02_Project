@@ -1,5 +1,65 @@
-var map, tile_x;
-const info = new Map();
+class Node {
+	constructor(data, next = null) {
+		this.data = data;
+		this.next = next;
+	}
+};
+
+class LinkedList {
+	constructor(){
+		this.head = null;
+	}
+	insertFirst(data){// Insert first Node
+		this.head = new Node(data, this.head);
+	}
+	insertAt(data, tile){// Insert at tile
+		if(tile < this.head.data.tile){//insert at first
+			this.head = new Node(data, this.head);
+			return;
+		}
+		const node = new Node(data);// create new node to hold info
+		let current = this.head;// create poiinter to traverse list
+		let previous = current;
+		while( previous.next != null && current.data.tile < tile) {
+			previous = current;
+			current = current.next;
+		}
+		if(previous.next == null) {
+			previous.next = node;
+			return;
+		}
+		node.next = current;
+		previous.next = node;
+	}
+	removeAt(tile){// Remove tile
+		let current = this.head;
+		let previous;
+		
+		if(this.head.data.tile == tile) {
+			this.head = current.next;
+		}else {
+			while(current.data.tile != tile){
+				previous = current;
+				current = current.next;
+			}
+			previous.next = current.next;
+		}
+	}
+	clear() {// Clear list
+		this.head = null;
+	}
+	printListData(){// Print list data
+		let current = this.head;
+		while(current){
+			console.log(current.data.tile);
+			current = current.next;
+		}
+	}
+};
+
+const grouping = new LinkedList();// create new linked list
+const info = new Map();// create hash map
+var map, tile_x;// make map and tile_x variables global
 
 (function() {
 
@@ -40,7 +100,11 @@ const info = new Map();
 
   drawMap = function() {
     for (let index = 0; index < map.length; index ++) {
-      buffer.fillStyle = (map[index] == 0)?"#FFFFFF":"#000000";
+      let color;
+      if(map[index] == 0) color = "#FFFFFF";
+      else if(map[index] == 1) color = "#000000";
+      else color = "#0000FF";
+      buffer.fillStyle = color;
       buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
     }
   };
@@ -67,26 +131,29 @@ const info = new Map();
     drawMap();
   };
   
-  function groupTiles() {// this function lets a user select the tiles they will add info to (NEEDS WORK!!!!!)
-  const eInfo = {
-  eName: "pre-american history",
-  location: "South Wing",
-  eED: 2024-04-01,
-  floorNum: "2",
-};
-  var position = tile_x;// store tiles x-position
-  for (var i = 0; i < tile_y; i++) {// for every row
-   position += 16;//add 16 tiles to adjust position in array
-  }
   
-  if(map[position] == 1){// if select wall
-  	alert("invlaid position to add info");// tell user cant add info
-  }
-  
-  else {// if select are that is not wall
-  	info.set(position, eInfo);// let user add info to area
-  	alert(info.get(position).eName);
+  function groupTiles() {// allows a user select to tiles to add info to (ADD ability to remove tiles already selected)
+  	const eInfo = {eName: " ", location: " ", eED: " ", floorNum: " ", tile: 0,};
+  	var position = tile_x;// x-axis position on tile map
+  	for(var i = 0; i < tile_y; i++) {// for each row
+  	   position += 16;// adjust position of tile
   	}
+  	if(map[position] == 1) {// if selected a wall tile
+  		alert("invalid position to add info");// tell user can't write there
+  	}else if(map[position] == 2) {// if selected an already choosen floor tile
+  		grouping.removeAt(position);
+  		map[position] = 0;
+  	}else {// if selected floor tile
+  		eInfo.tile = position;// store tile that is being grouped
+  		if(grouping.head == null) {// if grouping is empty
+  			grouping.insertFirst(eInfo);
+  		}else {// if grouping is not empty
+  			grouping.insertAt(eInfo, position);// store tile in appropriate position
+  		}
+  		grouping.printListData();
+  		map[position] = 2;
+  	}
+  	drawMap();
   };
 
   window.addEventListener("resize", resize, {passive:true});
@@ -100,28 +167,15 @@ const info = new Map();
 
 })();
 
-function enterInfo() {// NEEDS WORK !!!
-let text;
-var position = tile_x;// store tiles x-position
-  for (var i = 0; i < tile_y; i++) {// for every row
-   position += 16;//add 16 tiles to adjust position in array
-  }
-let entry = prompt("Enter Map info:", "westWing");
-if(entry == null || entry == ""){
-text = "User cancelled the prompt.";
-} else {
-    text = "location designated as " + info.get(position).eName + " this is where the exhibit is located";
-  }
-  document.getElementById("test").innerHTML = text;
+function submitInfo(form) {//collect information from form and store to associated tiles	
+var value= document.getElementsByName('wing');// create array holding radio buttons
+var wing;// create varialbe to hold value of selected radio button
+for (var radio of value){// go through all of the radio buttons
+if (radio.checked) {// if button was checked
+wing = radio.value;// collect value
+break;// exit search
 }
-
-function sumbitInfo(form) {	
-var value= document.getElementsByName('wing');
-var wing;
-for (var radio of value){
-if (radio.checked) {    
-            wing = radio.value;
-                    }
- }
- alert(form.eName.value  + " " + form.eED.vlaue + " " + form.floor.value + " " + wing);
+}
+if(wing == null) alert("Please sleect wing");
+else alert(form.eName.value  + " " + form.endDate.value + " " + form.floor.value + " " + wing);
 };
