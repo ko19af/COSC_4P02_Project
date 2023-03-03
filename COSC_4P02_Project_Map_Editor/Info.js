@@ -13,14 +13,6 @@ function submitInfo(form) {// collect information from form and store to associa
 	//if (wing == null) alert("please select a wing");
 	//else alert(form.eName.value  + " " + form.endDate.value + " " + form.floor.value + " " + wing);
 };
-
-function myFunction(){
-		let current = list.head;
-		while(current){
-			console.log(current.data.tile);
-			current = current.next;
-		}
-	}
 	
 function loadInfo(){
 	
