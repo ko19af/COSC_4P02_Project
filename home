@@ -1,0 +1,199 @@
+<!DOCTYPE html><html><head><link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" /></head><body><div class="v0_3"><div class="v1_2"></div><div class="v1_6"></div><span class="v1_8">Search for maps
+</span><div class="v1_15"></div><div class="v1_16"></div><span class="v8_20">or browse popular searches</span><div class="v8_22"></div><div class="v8_24"></div><div class="v8_26"></div><div class="v10_34"></div><div class="v10_38"></div><div class="v11_41"></div><span class="v10_30">OR</span><span class="v10_27">Upload your own Map!</span><div class="v10_29"></div></div></body></html> <br/><br/> <style>* {
+  box-sizing: border-box;
+}
+body {
+  font-size: 14px;
+}
+.v0_3 {
+  width: 390px;
+  height: 844px;
+  background: rgba(93,84,200,1);
+  opacity: 1;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.v1_2 {
+  width: 384px;
+  height: 81px;
+  background: rgba(255,253,253,1);
+  opacity: 1;
+  position: absolute;
+  top: 122px;
+  left: 2px;
+  overflow: hidden;
+}
+.v1_6 {
+  width: 100px;
+  height: 100px;
+  background: rgba(252,252,252,1);
+  opacity: 1;
+  position: absolute;
+  top: 647px;
+  left: 73px;
+  transform: rotate(-44deg);
+  overflow: hidden;
+}
+.v1_8 {
+  width: 273px;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 146px;
+  left: 92px;
+  font-family: Inter;
+  font-weight: Black Italic;
+  font-size: 20px;
+  opacity: 1;
+  text-align: left;
+}
+.v1_15 {
+  width: 29px;
+  height: 32px;
+  background: url("../images/v1_15.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 146px;
+  left: 30px;
+  overflow: hidden;
+}
+.v1_16 {
+  width: 100px;
+  height: 100px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 577px;
+  left: 298px;
+  transform: rotate(-38deg);
+  overflow: hidden;
+}
+.v8_20 {
+  width: 175px;
+  color: rgba(255,255,255,1);
+  position: absolute;
+  top: 214px;
+  left: 103px;
+  font-family: Inter;
+  font-weight: Semi Bold;
+  font-size: 13px;
+  opacity: 1;
+  text-align: left;
+}
+.v8_22 {
+  width: 135px;
+  height: 46px;
+  background: url("../images/v8_22.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 7px;
+  left: 2px;
+  overflow: hidden;
+}
+.v8_24 {
+  width: 34px;
+  height: 29px;
+  background: url("../images/v8_24.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 146px;
+  left: 291px;
+  overflow: hidden;
+}
+.v8_26 {
+  width: 51px;
+  height: 46px;
+  background: url("../images/v8_26.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 283px;
+  overflow: hidden;
+}
+.v10_34 {
+  width: 401px;
+  height: 849px;
+  background: url("../images/v10_34.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 5px;
+  left: 7px;
+  overflow: hidden;
+}
+.v10_38 {
+  width: 202px;
+  height: 61px;
+  background: url("../images/v10_38.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 765px;
+  left: 94px;
+  overflow: hidden;
+}
+.v11_41 {
+  width: 393px;
+  height: 137px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 315px;
+  left: 3px;
+  overflow: hidden;
+}
+.v10_30 {
+  width: 36px;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 322px;
+  left: 177px;
+  font-family: Inter;
+  font-weight: Black Italic;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v10_27 {
+  width: 267px;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 362px;
+  left: 65px;
+  font-family: Inter;
+  font-weight: Black Italic;
+  font-size: 24px;
+  opacity: 1;
+  text-align: left;
+}
+.v10_29 {
+  width: 73px;
+  height: 46px;
+  background: url("../images/v10_29.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 399px;
+  left: 159px;
+  overflow: hidden;
+}
+</style>
