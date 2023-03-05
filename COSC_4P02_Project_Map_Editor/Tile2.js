@@ -103,6 +103,16 @@ var map, tile_x;// make map and tile_x variables global
       let color;
       if(map[index] == 0) color = "#FFFFFF";
       else if(map[index] == 1) color = "#000000";
+	      
+      //gather location information from infoInput
+      //test with bathroom icon
+      //var data = https://images.freeimages.com/fic/images/icons/2219/dot_pictograms/256/toilets.png
+      //var temp = context.canvas.getContext("2d");
+      //document.getElementById("icon").src = data;
+      //var image = document.getElementById("icon");
+      //var fill = context.canvas.createPattern(image,"no-repeat");
+      //buffer.fillStyle = fill;
+      
       else color = "#0000FF";
       buffer.fillStyle = color;
       buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
