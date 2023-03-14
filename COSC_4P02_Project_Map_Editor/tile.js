@@ -1,6 +1,18 @@
+map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+         1,0,1,1,0,1,1,0,1,1,1,0,1,1,1,1,
+         1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,
+         1,0,1,0,0,0,1,0,1,1,1,0,1,1,1,1,
+         1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
+         1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
+         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];//make map global variable
+         
+document.getElementById("demo").innerHTML = "input layout for floor: " + JSON.parse(sessionStorage.getItem("rFloors"));
+
 (function() {
 
-  var buffer, context, controller, drawMap, loop, map, output, size, tile_x, tile_y, value;
+  var buffer, context, controller, drawMap, loop, output, size, tile_x, tile_y, value;
 
   buffer = document.createElement("canvas").getContext("2d");
   context = document.querySelector("canvas").getContext("2d");
@@ -10,16 +22,6 @@
 
   buffer.canvas.width = 16 * size;
   buffer.canvas.height = 9 * size;
-
-  map = [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-         1,0,1,1,0,1,1,0,1,1,1,0,1,1,1,1,
-         1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,
-         1,0,1,0,0,0,1,0,1,1,1,0,1,1,1,1,
-         1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
-         1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
-         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
 
   controller = {
 
@@ -44,7 +46,7 @@
 
     for (let index = 0; index < map.length; index ++) {
 
-      buffer.fillStyle = (map[index] == 1)?"#FFFFFF":"#000000";
+      buffer.fillStyle = (map[index] == 0)?"#FFFFFF":"#000000";
       buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
 
     }
@@ -88,21 +90,14 @@
   };
   
   function changeColor() {
-  var position = tile_x;
-  
-  for (var i = 0; i < tile_y; i++) {
-  
-   position += 16;
-  
-  }
-  
-  if(map[position] == 1){
-  
-  	map[position] = 0;
-  
-  }else map[position] = 1;
-  
-  drawMap();
+  	var position = tile_x;
+  	for (var i = 0; i < tile_y; i++) {
+  		position += 16;
+  	}
+  	if(map[position] == 1) {
+  		map[position] = 0;
+  	}else map[position] = 1;
+  	drawMap();
   };
 
   window.addEventListener("resize", resize, {passive:true});
@@ -115,3 +110,10 @@
   window.requestAnimationFrame(loop);
 
 })();
+
+function submitFloor(){// store floor plan
+	alert("button pushed");// get rid of later
+	sessionStorage.setItem("floorLayout", JSON.stringify(map));// stormap info
+	window.open('floorInfo.html');
+	window.close();
+}
