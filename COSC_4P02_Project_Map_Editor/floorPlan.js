@@ -8,7 +8,7 @@ map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
          1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
          1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];//make map global variable
          
-document.getElementById("demo").innerHTML = "input layout for floor: " + JSON.parse(sessionStorage.getItem("rFloors"));
+document.getElementById("floorPlan").innerHTML = "input layout for floor: " + JSON.parse(sessionStorage.getItem("rFloors"));
 
 (function() {
 
