@@ -57,9 +57,10 @@ class LinkedList {
 	}
 };
 
-const grouping = new LinkedList();// create new linked list
-const info = new Map();// create hash map
-var map, tile_x;// make map and tile_x variables global
+const grouping = new LinkedList();// create linked list for storing grouped tiles
+const info = new Map();// create map to hold data associated with a tile
+var map = JSON.parse(sessionStorage.getItem("floorLayout"))// get floor layout from session storage
+var tile_x;// make tile_x variables global
 
 (function() {
 
@@ -74,15 +75,15 @@ var map, tile_x;// make map and tile_x variables global
   buffer.canvas.width = 16 * size;
   buffer.canvas.height = 9 * size;
 
-  map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-         1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,
-         1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,
-         1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,
-         1,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1,
-         1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,
-         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-         1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,
-         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+//  map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+//         1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,
+//         1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,
+//         1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,
+//        1,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1,
+//         1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,
+//         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+//         1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,
+//         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
 
   controller = {
 
@@ -103,7 +104,7 @@ var map, tile_x;// make map and tile_x variables global
       let color;
       if(map[index] == 0) color = "#FFFFFF";
       else if(map[index] == 1) color = "#000000";
-	      
+      
       //gather location information from infoInput
       //test with bathroom icon
       //var data = https://images.freeimages.com/fic/images/icons/2219/dot_pictograms/256/toilets.png
@@ -112,7 +113,7 @@ var map, tile_x;// make map and tile_x variables global
       //var image = document.getElementById("icon");
       //var fill = context.canvas.createPattern(image,"no-repeat");
       //buffer.fillStyle = fill;
-      
+	    
       else color = "#0000FF";
       buffer.fillStyle = color;
       buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
@@ -163,6 +164,7 @@ var map, tile_x;// make map and tile_x variables global
   		grouping.printListData();
   		map[position] = 2;
   	}
+  	sessionStorage.setItem("group", JSON.stringify(grouping));// make accessible to other pages
   	drawMap();
   };
 
@@ -177,15 +179,16 @@ var map, tile_x;// make map and tile_x variables global
 
 })();
 
-function submitInfo(form) {//collect information from form and store to associated tiles	
-var value= document.getElementsByName('wing');// create array holding radio buttons
-var wing;// create varialbe to hold value of selected radio button
-for (var radio of value){// go through all of the radio buttons
-if (radio.checked) {// if button was checked
-wing = radio.value;// collect value
-break;// exit search
+function finishFloor() {
+	let fNum = JSON.parse(sessionStorage.getItem("rFloors"));// get numner of floors
+	fNum = fNum - 1;// decrease count
+	
+	if(fNum == 0) {// if nu o more floors to add
+		//window.open('preview.html');// open prevew page to view built map
+		myWindow.close();// close current window
+	}else {// if still more floors to add
+		sessionStorage.setItem("rFloors",JSON.stringify(fNum));// set new floor count
+		//window.open('floorPlan.html')// open floor planner page
+		myWindow.close();// close window
+	}
 }
-}
-if(wing == null) alert("Please sleect wing");
-else alert(form.eName.value  + " " + form.endDate.value + " " + form.floor.value + " " + wing);
-};
