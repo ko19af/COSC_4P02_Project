@@ -133,7 +133,7 @@ mapping.set(1,[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 function buttonMaker(){
 
 	let list = document.getElementById("buttons")
-	for (let value = 0; value < 4; value++) {// needs to be altered to add buttons for all floors
+	for (let value = 0; value < mapping.size; value++) {// needs to be altered to add buttons for all floors
 		var x = document.createElement("BUTTON");
 		var t = document.createTextNode("View floor " + (value + 1));
 		x.appendChild(t);
