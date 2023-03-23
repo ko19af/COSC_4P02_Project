@@ -1,4 +1,5 @@
 //map = JSON.parse(sessionStorage.getItem("floorLayout"));//make map accessible everywhere
+
 map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
          1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
          1,0,1,1,0,1,1,0,1,1,1,0,1,1,1,1,
@@ -8,6 +9,29 @@ map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
          1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
          1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
          1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];//make map accessible everywhere
+         
+mapping = new Map();
+
+mapping.set(0, [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+         1,0,0,0,0,0,0,0,1,1,1,0,1,1,1,1,
+         1,0,0,0,0,0,0,0,1,0,1,0,1,0,1,1,
+         1,0,0,0,0,0,0,0,1,1,1,0,1,1,1,1,
+         1,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,
+         1,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,
+         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
+         
+mapping.set(1,[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+         1,0,1,1,0,1,1,0,1,1,1,0,1,1,1,1,
+         1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,
+         1,0,1,0,0,0,1,0,1,1,1,0,1,1,1,1,
+         1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
+         1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
+         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
+         
 (function() {
 
   var buffer, context, controller, drawMap, loop, output, size, tile_x, tile_y, value;
@@ -105,3 +129,15 @@ map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
   window.requestAnimationFrame(loop);
 
 })();
+
+function buttonMaker(){
+
+	let list = document.getElementById("buttons")
+	for (let value = 0; value < 4; value++) {// needs to be altered to add buttons for all floors
+		var x = document.createElement("BUTTON");
+		var t = document.createTextNode("View floor " + (value + 1));
+		x.appendChild(t);
+		x.addEventListener("click", function() {map = mapping.get(value);});
+		list.appendChild(x);
+	}
+}
