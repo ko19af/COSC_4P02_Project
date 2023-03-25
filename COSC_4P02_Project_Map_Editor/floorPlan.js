@@ -1,4 +1,4 @@
-map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+var map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
          1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
          1,0,1,1,0,1,1,0,1,1,1,0,1,1,1,1,
          1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,
@@ -6,9 +6,9 @@ map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
          1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
          1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
          1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];//make map global variable
+         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];//make map accessible everywhere
          
-document.getElementById("floorPlan").innerHTML = "input layout for floor: " + JSON.parse(sessionStorage.getItem("rFloors"));
+document.getElementById("floorPrompt").innerHTML = "input layout for floor: " + JSON.parse(sessionStorage.getItem("rFloors"));
 
 (function() {
 
@@ -111,9 +111,16 @@ document.getElementById("floorPlan").innerHTML = "input layout for floor: " + JS
 
 })();
 
-function submitFloor(){// store floor plan
-	alert("button pushed");// get rid of later
-	sessionStorage.setItem("floorLayout", JSON.stringify(map));// stormap info
-	window.open('floorInfo.html');
-	window.close();
+function submitFloor(){// submit floor plan to next stage of process
+
+	let fNum = JSON.parse(sessionStorage.getItem("rFloors"));// get floor number
+	let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get museum name
+	let museumMap = JSON.parse(sessionStorage.getItem(museName));// get museum map
+	
+	museumMap[fNum] = {layout: map, fInfo: [{eName:" ", location:" ",eEd: " ", floorNum: " ", tile: 0},],};// store floor info into museum map
+	sessionStorage.setItem(museName, JSON.stringify(museumMap));// set museum map into storage
+
+	sessionStorage.setItem("floorLayout", JSON.stringify(map));// store floor layout info
+	window.open('floorInfo.html');// open floor information loader page
+	window.close();// close current page
 }
