@@ -1,4 +1,4 @@
-et museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get the museum name
+let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get the museum name
 let museumMap = JSON.parse(sessionStorage.getItem(museName));// get the museum map
 var map = museumMap[1].layout;// set the map data to the data in the first floor
          
