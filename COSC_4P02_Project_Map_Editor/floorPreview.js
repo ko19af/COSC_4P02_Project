@@ -1,36 +1,6 @@
-//map = JSON.parse(sessionStorage.getItem("floorLayout"));//make map accessible everywhere
-
-map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-         1,0,1,1,0,1,1,0,1,1,1,0,1,1,1,1,
-         1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,
-         1,0,1,0,0,0,1,0,1,1,1,0,1,1,1,1,
-         1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
-         1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
-         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];//make map accessible everywhere
-         
-mapping = new Map();
-
-mapping.set(0, [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-         1,0,0,0,0,0,0,0,1,1,1,0,1,1,1,1,
-         1,0,0,0,0,0,0,0,1,0,1,0,1,0,1,1,
-         1,0,0,0,0,0,0,0,1,1,1,0,1,1,1,1,
-         1,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,
-         1,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,
-         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
-         
-mapping.set(1,[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-         1,0,1,1,0,1,1,0,1,1,1,0,1,1,1,1,
-         1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,
-         1,0,1,0,0,0,1,0,1,1,1,0,1,1,1,1,
-         1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
-         1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
-         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
+et museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get the museum name
+let museumMap = JSON.parse(sessionStorage.getItem(museName));// get the museum map
+var map = museumMap[1].layout;// set the map data to the data in the first floor
          
 (function() {
 
@@ -133,11 +103,11 @@ mapping.set(1,[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 function buttonMaker(){
 
 	let list = document.getElementById("buttons")
-	for (let value = 0; value < mapping.size; value++) {// needs to be altered to add buttons for all floors
-		var x = document.createElement("BUTTON");
-		var t = document.createTextNode("View floor " + (value + 1));
-		x.appendChild(t);
-		x.addEventListener("click", function() {map = mapping.get(value);});
-		list.appendChild(x);
+	for (let value = 1; value <= museumMap.length; value++) {// needs to be altered to add buttons for all floors
+		var x = document.createElement("BUTTON");// create button object
+		var t = document.createTextNode("View floor " + (value));// attach button specefic text
+		x.appendChild(t);// attach text to button
+		x.addEventListener("click", function() {map = museumMap[value].layout;});// attach function to load map on button click
+		list.appendChild(x);//append button to list of buttons
 	}
 }
