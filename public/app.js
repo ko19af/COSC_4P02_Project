@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", event => {
 
             .then(result =>{
                 const user = result.user;
-                document.write('Hello ${user.displayNmae}');
+                document.write('Hello ${user.displayName}');
                 console.log(user)
             })
             .catch(console.log)
