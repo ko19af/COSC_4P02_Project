@@ -1,6 +1,7 @@
 let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get the museum name
 let museumMap = JSON.parse(sessionStorage.getItem(museName));// get the museum map
 var map = museumMap[1].layout;// set the map data to the data in the first floor
+var floor = 1;// desigantes which floor is being viewed used by info display
          
 (function() {
 
@@ -81,12 +82,21 @@ var map = museumMap[1].layout;// set the map data to the data in the first floor
 
   };
   
-  function displayInfo() {
-  	var position = tile_x;
-  	for (var i = 0; i < tile_y; i++) {
-  		position += 16;
+  function displayInfo() {// this function displays the info in a tile on the column
+  	var position = tile_x;// x=axis position of tile
+  	for (var i = 0; i < tile_y; i++) {// calculate y-position
+  		position += 16;// determine which tile is being viewed
   	}
+  	info = museumMap[floor].fInfo[position]// get info on tile from museumMap
+  	list = document.getElementById("info");// get html element for viewing info
+  	list.innerHTML = "";// clear info paragraph
   	
+  	for(let x in info) {// load info from array into paragraph
+  		
+  		para = document.createElement("p");// create paragraph object
+  		para.innerText = info[x];// fill it with the info
+ 		list.appendChild(para);// append it to info column
+  	}
   };
 
   window.addEventListener("resize", resize, {passive:true});
@@ -102,12 +112,28 @@ var map = museumMap[1].layout;// set the map data to the data in the first floor
 
 function buttonMaker(){
 
-	let list = document.getElementById("buttons")
-	for (let value = 1; value <= museumMap.length; value++) {// needs to be altered to add buttons for all floors
+	let list = document.getElementById("buttons")// get html element for holding buttons
+	for (let value = 1; value <= (museumMap.length)-1; value++) {// needs to be altered to add buttons for all floors
 		var x = document.createElement("BUTTON");// create button object
 		var t = document.createTextNode("View floor " + (value));// attach button specefic text
 		x.appendChild(t);// attach text to button
-		x.addEventListener("click", function() {map = museumMap[value].layout;});// attach function to load map on button click
+		x.addEventListener("click", function() {map = museumMap[value].layout; floor = value;});// attach function to load map on button click
 		list.appendChild(x);//append button to list of buttons
 	}
+}
+
+function changeLayout() {
+	sessionStorage.setItem("modify", JSON.stringify(floor));// set which floor is being modified
+	window.open("floorPlan.html");// open floor editor page
+	window.close();// close current window
+}
+
+function changeInfo(){
+	sessionStorage.setItem("modify", JSON.stringify(floor));// set which floor is being modified
+	window.open("floorInfo.html");// open floor info editor
+	window.close();// close window
+}
+
+function finished(){// need database interaction code
+	
 }
