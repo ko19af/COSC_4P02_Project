@@ -1,0 +1,59 @@
+* {
+
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+
+}
+
+html {
+
+  height:100%;
+  width:100%;
+
+}
+
+body {
+
+  align-content:space-around;
+  background-color:#202830;
+  color:#ffffff;
+  display:grid;
+  justify-content:center;
+  min-height:100%;
+  text-align:center;
+  width:100%;
+
+}
+
+canvas {
+
+  background-color:#ffffff;
+
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Create three unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 10px;
+  height: 400px; /* Should be removed. Only for demonstration */
+}
+
+.left, .right {
+  width: 15%;
+}
+
+.middle {
+  width: 60%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}

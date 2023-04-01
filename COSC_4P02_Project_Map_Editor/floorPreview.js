@@ -1,15 +1,8 @@
-var map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-         1,0,1,1,0,1,1,0,1,1,1,0,1,1,1,1,
-         1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,
-         1,0,1,0,0,0,1,0,1,1,1,0,1,1,1,1,
-         1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
-         1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
-         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];//make map accessible everywhere
+let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get the museum name
+let museumMap = JSON.parse(sessionStorage.getItem(museName));// get the museum map
+var map = museumMap[1].layout;// set the map data to the data in the first floor
+var floor = 1;// desigantes which floor is being viewed used by info display
          
-document.getElementById("floorPrompt").innerHTML = "input layout for floor: " + JSON.parse(sessionStorage.getItem("rFloors"));
-
 (function() {
 
   var buffer, context, controller, drawMap, loop, output, size, tile_x, tile_y, value;
@@ -89,38 +82,58 @@ document.getElementById("floorPrompt").innerHTML = "input layout for floor: " + 
 
   };
   
-  function changeColor() {
-  	var position = tile_x;
-  	for (var i = 0; i < tile_y; i++) {
-  		position += 16;
+  function displayInfo() {// this function displays the info in a tile on the column
+  	var position = tile_x;// x=axis position of tile
+  	for (var i = 0; i < tile_y; i++) {// calculate y-position
+  		position += 16;// determine which tile is being viewed
   	}
-  	if(map[position] == 1) {
-  		map[position] = 0;
-  	}else map[position] = 1;
-  	drawMap();
+  	info = museumMap[floor].fInfo[position]// get info on tile from museumMap
+  	list = document.getElementById("info");// get html element for viewing info
+  	list.innerHTML = "";// clear info paragraph
+  	
+  	for(let x in info) {// load info from array into paragraph
+  		
+  		para = document.createElement("p");// create paragraph object
+  		para.innerText = info[x];// fill it with the info
+ 		list.appendChild(para);// append it to info column
+  	}
   };
 
   window.addEventListener("resize", resize, {passive:true});
   context.canvas.addEventListener("mousemove", controller.move);
   context.canvas.addEventListener("touchmove", controller.move, {passive:true});
   context.canvas.addEventListener("touchstart", controller.move, {passive:true});
-  context.canvas.addEventListener("click", changeColor);
+  context.canvas.addEventListener("click", displayInfo);
   resize();
 
   window.requestAnimationFrame(loop);
 
 })();
 
-function submitFloor(){// submit floor plan to next stage of process
+function buttonMaker(){
 
-	let fNum = JSON.parse(sessionStorage.getItem("rFloors"));// get floor number
-	let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get museum name
-	let museumMap = JSON.parse(sessionStorage.getItem(museName));// get museum map
+	let list = document.getElementById("buttons")// get html element for holding buttons
+	for (let value = 1; value <= (museumMap.length)-1; value++) {// needs to be altered to add buttons for all floors
+		var x = document.createElement("BUTTON");// create button object
+		var t = document.createTextNode("View floor " + (value));// attach button specefic text
+		x.appendChild(t);// attach text to button
+		x.addEventListener("click", function() {map = museumMap[value].layout; floor = value;});// attach function to load map on button click
+		list.appendChild(x);//append button to list of buttons
+	}
+}
+
+function changeLayout() {
+	sessionStorage.setItem("modify", JSON.stringify(floor));// set which floor is being modified
+	window.open("floorPlan.html");// open floor editor page
+	window.close();// close current window
+}
+
+function changeInfo(){
+	sessionStorage.setItem("modify", JSON.stringify(floor));// set which floor is being modified
+	window.open("floorInfo.html");// open floor info editor
+	window.close();// close window
+}
+
+function finished(){// need database interaction code
 	
-	museumMap[fNum] = {layout: map, fInfo: [{eName:" ", location:" ",eEd: " ", floorNum: " ", tile: 0},],};// store floor info into museum map
-	sessionStorage.setItem(museName, JSON.stringify(museumMap));// set museum map into storage
-
-	sessionStorage.setItem("floorLayout", JSON.stringify(map));// store floor layout info
-	window.open('floorInfo.html');// open floor information loader page
-	window.close();// close current page
 }
