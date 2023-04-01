@@ -103,7 +103,7 @@ var tile_x;// make tile_x variables global
       //var image = document.getElementById("icon");
       //var fill = context.canvas.createPattern(image,"no-repeat");
       //buffer.fillStyle = fill;
-	    
+      
       else color = "#0000FF";
       buffer.fillStyle = color;
       buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
@@ -136,9 +136,11 @@ var tile_x;// make tile_x variables global
   function groupTiles() {// allows a user select to tiles to add info to (ADD ability to remove tiles already selected)
   	const eInfo = {eName: " ", location: " ", eED: " ", floorNum: " ", tile: 0,};
   	var position = tile_x;// x-axis position on tile map
+  	
   	for(var i = 0; i < tile_y; i++) {// for each row
   	   position += 16;// adjust position of tile
   	}
+  	
   	if(map[position] == 1) {// if selected a wall tile
   		alert("invalid position to add info");// tell user can't write there
   	}else if(map[position] == 2) {// if selected an already choosen floor tile
@@ -154,6 +156,7 @@ var tile_x;// make tile_x variables global
   		grouping.printListData();
   		map[position] = 2;
   	}
+  	
   	sessionStorage.setItem("group", JSON.stringify(grouping));// make accessible to other pages
   	drawMap();
   };
@@ -173,12 +176,18 @@ function finishFloor() {
 	let fNum = JSON.parse(sessionStorage.getItem("rFloors"));// get numner of floors
 	fNum = fNum - 1;// decrease count
 	
-	if(fNum == 0) {// if nu o more floors to add
-		//window.open('preview.html');// open prevew page to view built map
-		myWindow.close();// close current window
+	if(fNum <= 0) {// if nu o more floors to add
+		window.open('floorPreview.html');// open prevew page to view built map
+		window.close();// close current window
 	}else {// if still more floors to add
 		sessionStorage.setItem("rFloors",JSON.stringify(fNum));// set new floor count
-		//window.open('floorPlan.html')// open floor planner page
-		myWindow.close();// close window
+		window.open('floorPlan.html')// open floor planner page
+		window.open("floorPlan.html");
+		window.close();// close window
 	}
+}
+
+function inputInfo(){
+	window.open('infoInput.html');
+	window.close();
 }

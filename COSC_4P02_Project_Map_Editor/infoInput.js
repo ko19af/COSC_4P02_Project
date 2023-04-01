@@ -1,4 +1,4 @@
-const list = JSON.parse(sessionStorage.getItem("group"));// get list info from session storage
+const list = JSON.parse(sessionStorage.getItem("group")).head;// get list info from session storage
 
 function submitInfo(form) {// collect information from form and store to associated tiles (THIS NEEDS WORK !!!!!)
 	var value = document.getElementsByName('wing');// create array holding radio buttons
@@ -18,21 +18,28 @@ function loadInfo(eN, eD, f, w){
 	let current = list;// set current to head of list
 	do {// file fields
 		current.data.eName = eN;// fill exhibit name
-		current.eED = eD;// fill exhibit enddate
-		current.floorNum = f;// THIS NEEDS TO BE FIXED WHEN WE ARE CREATING MULTIPLE FLOORS
-		current.data.location = wing;// fill wing
+		current.data.eED = eD;// fill exhibit enddate
+		current.data.floorNum = f;// THIS NEEDS TO BE FIXED WHEN WE ARE CREATING MULTIPLE FLOORS
+		current.data.location = w;// fill wing
 		current = current.next;// move to next in list
 	} while(current != null);// if reached end of list exit
-	//saveToMap();// load list into hashmap
+	saveToMap();// load list into hashmap
 };
 
 function saveToMap() {// this function save the linked list entrys to the hashmap
 	let current = list;
-	let mapping = JSON.parse(sessionStorage.getItem("cMap"));// get mapping data
+	let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get name of museum
+	let museumMap = JSON.parse(sessionStorage.getItem(museName));// get mapping data
+	let fNum = JSON.parse(sessionStorage.getItem("rFloors"));// get floor number
+	let infoMap = museumMap[fNum];// reterive from storage
+	
 	do {// fill in new map data
-		mapping.set(current.data.tile, current.data)// place tile info into map
+		infoMap.fInfo[current.data.tile] = current.data;// place tile info into map
 		current = current.next;// move to next in lsit
 	} while(current != null);// if reached end of list exit
-	sessionStorage.setItem("cMap", JSON.stringify(mapping));// set new map data
+	
+	museumMap[fNum] = infoMap;// set floor numbe in museum map to updated floor map
+	sessionStorage.setItem(museName,JSON.stringify(museumMap));// set new map data
+	window.open("floorInfo.html");
 	window.close();// close window
 };
