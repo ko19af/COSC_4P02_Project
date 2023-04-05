@@ -45,7 +45,10 @@ const firebaseConfig = {
   				var x = document.createElement("BUTTON");// create button object
 				var t = document.createTextNode("View: " + name);// attach button specefic text
 				x.appendChild(t);// attach text to button
-				x.addEventListener("click", function(){sessionStorage.setItem(name, JSON.stringify(map))});// on click load map info
+				x.addEventListener("click", function(){sessionStorage.setItem(name, JSON.stringify(map));
+								       sessionStorage.setItem("mInfo", JSON.stringify({mName: name})); 
+								       window.open("Viewer.html"); 
+								       window.close();});// on click load map info
 				newDiv.appendChild(x);
 				list.appendChild(newDiv);//append button to list of buttons
   			} 
