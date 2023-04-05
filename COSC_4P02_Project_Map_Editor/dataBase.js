@@ -15,7 +15,12 @@ const firebaseConfig = {
   // reference database
   var contactFormDB = firebase.database().ref("Map");
   
-  document.getElementById("finish").addEventListener("click", submitMap);
+  if(document.getElementById("finish")){
+  	document.getElementById("finish").addEventListener("click", submitMap);
+  }else {
+  	document.getElementById("searchForm").addEventListener("submit", loadMaps);
+  }
+  
   
   function submitMap(e) {
   	e.preventDefault();
@@ -23,16 +28,35 @@ const firebaseConfig = {
   	var map = JSON.parse(sessionStorage.getItem(name));
   	
   	saveMap(name, map);
-  	
+  	window.close();
+  }
+  
+  function loadMaps(e){// NEEDS WORK!!!!!!
+  	contactFormDB = firebase.database().ref("Map/");
+  let list = document.getElementById("buttons")// get html element for holding buttons
+  
+  	contactFormDB.on("child_added", function(data) {
+  		data.forEach(function(data){
+  		if(data.key != "name"){
+  			map = (data.val());
+  		}else{
+  				var name = data.val();
+  				const newDiv = document.createElement("div");
+  				var x = document.createElement("BUTTON");// create button object
+				var t = document.createTextNode("View: " + name);// attach button specefic text
+				x.appendChild(t);// attach text to button
+				x.addEventListener("click", function(){sessionStorage.setItem(name, JSON.stringify(map))});// on click load map info
+				newDiv.appendChild(x);
+				list.appendChild(newDiv);//append button to list of buttons
+  			} 
+  		});	
+	});
   }
   
   const saveMap = (name, map) => {
   	var newContactForm = contactFormDB.push();
-  	
   	newContactForm.set({
   	      name : name,
   	      map : map,
   	});
   }
-  
-  
