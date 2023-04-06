@@ -31,7 +31,7 @@ const firebaseConfig = {
   	window.close();
   }
   
-  function loadMaps(e){// NEEDS WORK!!!!!!
+  function loadMaps(e){
   	contactFormDB = firebase.database().ref("Map/");
   let list = document.getElementById("buttons")// get html element for holding buttons
   
