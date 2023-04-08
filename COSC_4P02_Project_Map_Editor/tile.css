@@ -3,7 +3,110 @@
   box-sizing:border-box;
   margin:0;
   padding:0;
+* {
 
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+
+}
+
+html {
+
+  height:100%;
+  width:100%;
+
+}
+
+body {
+
+  align-content:space-around;
+  background-color:#202830;
+  color:#ffffff;
+  display:grid;
+  justify-content:center;
+  min-height:100%;
+  text-align:center;
+  width:100%;
+
+}
+
+canvas {
+
+  background-color:#ffffff;
+
+}
+
+body {
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a, .dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+li.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* Set a style for all buttons */
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
 }
 
 html {
