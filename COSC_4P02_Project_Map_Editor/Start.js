@@ -7,5 +7,5 @@ function begin(form) {
 	sessionStorage.setItem(form.mName.value, JSON.stringify(museumMap));// initialize hash map to hold map data
 	sessionStorage.setItem("mInfo", JSON.stringify({mName: form.mName.value, numFloors: form.floors.value,}));
 	window.open('floorPlan.html');// open next page
-	myWindow.close();
+	window.close();
 };

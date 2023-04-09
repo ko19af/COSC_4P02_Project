@@ -114,11 +114,13 @@ function buttonMaker(){
 
 	let list = document.getElementById("buttons")// get html element for holding buttons
 	for (let value = 1; value <= (museumMap.length)-1; value++) {// needs to be altered to add buttons for all floors
+		const newDiv = document.createElement("div");
 		var x = document.createElement("BUTTON");// create button object
 		var t = document.createTextNode("View floor " + (value));// attach button specefic text
 		x.appendChild(t);// attach text to button
-		x.addEventListener("click", function() {map = museumMap[value].layout; floor = value;});// attach function to load map on button click
-		list.appendChild(x);//append button to list of buttons
+		x.addEventListener("click", function() {map = museumMap[value].layout; sessionStorage.setItem("modify", JSON.stringify(value)); floor = value;});// set which floor is being modified});// attach function to load map on button click
+		newDiv.appendChild(x);
+		list.appendChild(newDiv);//append button to list of buttons
 	}
 }
 
