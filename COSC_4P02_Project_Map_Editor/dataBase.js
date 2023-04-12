@@ -57,40 +57,46 @@ const firebaseConfig = {
   	database = firebase.database().ref("Map/");
    let list = document.getElementById("buttons")// get html element for holding buttons
   
+  if(true) {// CHANGE TO CHECK IF ADMIN LOGGED IN
+  		var nb = document.getElementById("navbar");
+		var admin = document.createElement("li");
+		admin.classList.add("dropdown");
+		var a = document.createElement("a");
+		a.classList.add("dropdown");
+		a.appendChild(document.createTextNode("Admin"));
+		a.href = "javascript:void(0)";
+		var ab = document.createElement("div");
+		ab.classList.add("dropdown-content")
+		var b1 = document.createElement("a");
+		b1.href = "Start.html";
+		b1.appendChild(document.createTextNode("Add Map"));
+		ab.appendChild(b1);
+		admin.append(a);
+		admin.append(ab);
+		nb.appendChild(admin);
+  }
+
   	database.on("child_added", function(data) {
   		data.forEach(function(data){
-  		if(data.key != "name"){
-  			map = (data.val());
-  		}else{
+  		if(data.key == "name"){
   				var name = data.val();
   				const newDiv = document.createElement("div");
   				var p = document.createElement("p");
   				var x = document.createElement("BUTTON");// create button object
 				var t = document.createTextNode("View: " + name);// attach button specefic text
 				x.appendChild(t);// attach text to button
-				x.addEventListener("click", function(){sessionStorage.setItem(name, JSON.stringify(map));
+				x.addEventListener("click", function(){var database = firebase.database();
+																	var user_ref = database.ref('Map/' + name);
+																	user_ref.on('value', function(snapshot) {
+																	var data = snapshot.val();
+																	sessionStorage.setItem(name, JSON.stringify(data.map));
 																	sessionStorage.setItem("mInfo", JSON.stringify({mName: name})); 
 																	window.open("Viewer.html"); 
 																	window.close();});// on click load map info
+																	})																
 				p.appendChild(x);
-  				
+  
   				if (true) {// CHANGE TO CHECK FOR ADMIN LOGGED IN
-					var nb = document.getElementById("navbar");
-					var admin = document.createElement("li");
-					admin.classList.add("dropdown");
-					var a = document.createElement("a");
-					a.classList.add("dropdown");
-					a.appendChild(document.createTextNode("Admin"));
-					a.href = "javascript:void(0)";
-					var ab = document.createElement("div");
-					ab.classList.add("dropdown-content")
-					var b1 = document.createElement("a");
-					b1.href = "Start.html";
-					b1.appendChild(document.createTextNode("Add Map"));
-					ab.appendChild(b1);
-					admin.append(a);
-					admin.append(ab);
-					nb.appendChild(admin);
 					var admin2 = document.createElement("li");
 					admin2.classList.add("dropdown");
 					var a2 = document.createElement("a");
