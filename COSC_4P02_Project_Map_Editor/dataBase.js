@@ -85,15 +85,17 @@ const firebaseConfig = {
   				var x = document.createElement("BUTTON");// create button object
 				var t = document.createTextNode("View: " + name);// attach button specefic text
 				x.appendChild(t);// attach text to button
-				x.addEventListener("click", function(){var database = firebase.database();
-																	var user_ref = database.ref('Map/' + name);
-																	user_ref.on('value', function(snapshot) {
-																	var data = snapshot.val();
-																	sessionStorage.setItem(name, JSON.stringify(data.map));
-																	sessionStorage.setItem("mInfo", JSON.stringify({mName: name})); 
-																	window.open("Viewer.html"); 
-																	window.close();});// on click load map info
-																	})																
+				x.addEventListener("click", function(){
+													var database = firebase.database();
+													var user_ref = database.ref('Map/' + name);// reference specfic map entry in database
+													user_ref.on('value', function(snapshot) {// get snap shot of data from database
+													var data = snapshot.val();// get javascript value of snapshot
+													sessionStorage.setItem(name, JSON.stringify(data.map));// store map in local storage
+													sessionStorage.setItem("mInfo", JSON.stringify({mName: name}));// store map name in loacal storage
+													window.open("Viewer.html");// open map viewer
+													window.close();// close search window
+													});
+													})// on click load map info														
 				p.appendChild(x);
   
   				if (true) {// CHANGE TO CHECK FOR ADMIN LOGGED IN
@@ -107,11 +109,18 @@ const firebaseConfig = {
 					ab2.classList.add("dropdown-content")
 					var b2 = document.createElement("BUTTON");
 					b2.addEventListener("click", function() {
-														sessionStorage.setItem("mInfo", JSON.stringify({mName:name,})); 
-														sessionStorage.setItem(name, JSON.stringify(map)); 
+														var database = firebase.database();
+														var user_ref = database.ref('Map/' + name);// reference specfic map entry in database
+														user_ref.on('value', function(snapshot) {// get snap shot of data from database
+														var data = snapshot.val();// get javascript value of snapshot
+														sessionStorage.setItem(name, JSON.stringify(data.map));// store map in local storage
+														sessionStorage.setItem("mInfo", JSON.stringify({mName:name,})); // store map name in loacal storage
+														});
+														
 														sessionStorage.setItem("update", JSON.stringify(true));
 														window.open("floorPreview.html"); 
-														window.close();});
+														window.close();
+														});
 					b2.appendChild(document.createTextNode("Edit Map"));
 					ab2.appendChild(b2);
 					var b3 = document.createElement("BUTTON");
