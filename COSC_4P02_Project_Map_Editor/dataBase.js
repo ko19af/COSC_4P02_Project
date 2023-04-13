@@ -143,11 +143,14 @@ const firebaseConfig = {
 
 function begin(form) {// This function check if a map already exists on the firebase storage
 
-	database = firebase.database().ref("Map/");
+	database = firebase.database().ref("Map/");// create reference to firebase database
 	database.on("child_added", function(data) {
-  		data.forEach(function(data){
-  		if(data.key == "name" && data.val() == mName){
-  				sessionStorage.setItem("noDuplicate", JSON.stringify(true));
+  		data.forEach(function(data){// for each piece of data in the database
+  		if(data.key == "name" && data.val() == mName){// if looking at the name key and has the same name as museum being added
+  				sessionStorage.setItem("noDuplicate", JSON.stringify(false));// set no duplicate to false
+  				return true;// break out of loop
+  			}else {
+  				sessionStorage.setItem("noDuplicate", JSON.stringify(true));// set no duplicate to true
   			}
   		});	
 	});
