@@ -140,3 +140,29 @@ const firebaseConfig = {
   		});	
 	});
   }
+
+function begin(form) {// This function check if a map already exists on the firebase storage
+
+	database = firebase.database().ref("Map/");
+	database.on("child_added", function(data) {
+  		data.forEach(function(data){
+  		if(data.key == "name" && data.val() == mName){
+  				sessionStorage.setItem("noDuplicate", JSON.stringify(true));
+  			}
+  		});	
+	});
+	
+	if(JSON.parse(sessionStorage.getItem("noDuplicate"))) {
+		sessionStorage.clear();
+		const museumMap = [];//create array for holding museumMap
+		museumMap[0] = {layout: [0], fInfo: [{eName:" ", location:" ",eEd: " ", floorNum: " ", tile: 0},],};// initialize musuem map with info template
+		sessionStorage.setItem("rFloors", JSON.stringify(form.floors.value));// set what floor we are at in the input stage
+		sessionStorage.setItem(form.mName.value, JSON.stringify(museumMap));// initialize hash map to hold map data
+		sessionStorage.setItem("mInfo", JSON.stringify({mName: form.mName.value, numFloors: form.floors.value,}));
+		window.open('floorPlan.html');// open next page
+		window.close();// close window as it is no longer needed
+	}else {
+		alert("Museum already Exist");
+		sessionStorage.clear();
+	}
+};
