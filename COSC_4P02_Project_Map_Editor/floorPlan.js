@@ -1,4 +1,11 @@
-var map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+var map;
+
+if(sessionStorage.getItem("modify")) {// if modifying map
+	let mFloor = JSON.parse(sessionStorage.getItem("modify"));// get floor being modified
+	let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get museum name
+	map = JSON.parse(sessionStorage.getItem(museName))[mFloor].layout;// set map to layout being edited;// get museum info
+}else {
+	map= [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
          1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
          1,0,1,1,0,1,1,0,1,1,1,0,1,1,1,1,
          1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,
@@ -6,9 +13,10 @@ var map = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
          1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
          1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,1,
          1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];//make map accessible everywhere
+         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];//make generic map
+} 
          
-document.getElementById("floorPrompt").innerHTML = "input layout for floor: " + JSON.parse(sessionStorage.getItem("rFloors"));
+document.getElementById("floorPrompt").innerHTML = "Input Layout For Floor: " + JSON.parse(sessionStorage.getItem("rFloors"));
 
 (function() {
 
@@ -112,8 +120,12 @@ document.getElementById("floorPrompt").innerHTML = "input layout for floor: " + 
 })();
 
 function submitFloor(){// submit floor plan to next stage of process
+	var fNum;
 
-	let fNum = JSON.parse(sessionStorage.getItem("rFloors"));// get floor number
+	if(sessionStorage.getItem("modify")) fNum = JSON.parse(sessionStorage.getItem("modify"));
+	else fNum = JSON.parse(sessionStorage.getItem("rFloors"));// get floor number
+	
+	
 	let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get museum name
 	let museumMap = JSON.parse(sessionStorage.getItem(museName));// get museum map
 	
