@@ -1,8 +1,9 @@
 let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get the museum name
 let museumMap = JSON.parse(sessionStorage.getItem(museName));// get the museum map
 var map = museumMap[1].layout;// set the map data to the data in the first floor
-var floor = 1;// desigantes which floor is being viewed used by info display
-         
+var floor = 1;// initialize floor variable
+sessionStorage.setItem("modify", JSON.stringify(1));// initialize modify floor to first floor
+
 (function() {
 
   var buffer, context, controller, drawMap, loop, output, size, tile_x, tile_y, value;
@@ -92,10 +93,11 @@ var floor = 1;// desigantes which floor is being viewed used by info display
   	list.innerHTML = "";// clear info paragraph
   	
   	for(let x in info) {// load info from array into paragraph
-  		
-  		para = document.createElement("p");// create paragraph object
-  		para.innerText = info[x];// fill it with the info
- 		list.appendChild(para);// append it to info column
+  		if(x != "tile") {
+  			para = document.createElement("p");// create paragraph object
+  			para.innerText = info[x];// fill it with the info
+ 			list.appendChild(para);// append it to info column
+  		}		
   	}
   };
 
@@ -125,17 +127,17 @@ function buttonMaker(){
 }
 
 function changeLayout() {
-	sessionStorage.setItem("modify", JSON.stringify(floor));// set which floor is being modified
-	window.open("floorPlan.html");// open floor editor page
-	window.close();// close current window
-}
-
-function changeInfo(){
-	sessionStorage.setItem("modify", JSON.stringify(floor));// set which floor is being modified
-	window.open("floorInfo.html");// open floor info editor
+	window.open("floorPlan.html");// open floor editor
 	window.close();// close window
 }
 
-function finished(){// need database interaction code
-	
+function changeInfo() {
+	window.open("floorInfo.html");// open floor information editor
+	window.close();// close window
+}
+
+function finished() {// need database interaction code
+	sessionStorage.clear();// clear session storage so it does not interfere with anything else
+	window.open("Search.html");
+	window.close();
 }
