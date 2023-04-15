@@ -58,8 +58,14 @@ class LinkedList {
 };
 
 const grouping = new LinkedList();// create linked list for storing grouped tiles
-const info = new Map();// create map to hold data associated with a tile
-var map = JSON.parse(sessionStorage.getItem("floorLayout"))// get floor layout from session storage
+var map;// get floor layout from session storage
+if(sessionStorage.getItem("modify")) {// if modifying map
+	let mFloor = JSON.parse(sessionStorage.getItem("modify"));// get floor being modified
+	let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get museum name
+	map = JSON.parse(sessionStorage.getItem(museName))[mFloor].layout;// set map to layout being edited;// get museum info
+}else map = JSON.parse(sessionStorage.getItem("floorLayout"))// get floor layout from session storage
+
+
 var tile_x;// make tile_x variables global
 
 (function() {
@@ -94,16 +100,6 @@ var tile_x;// make tile_x variables global
       let color;
       if(map[index] == 0) color = "#FFFFFF";
       else if(map[index] == 1) color = "#000000";
-      
-      //gather location information from infoInput
-      //test with bathroom icon
-      //var data = https://images.freeimages.com/fic/images/icons/2219/dot_pictograms/256/toilets.png
-      //var temp = context.canvas.getContext("2d");
-      //document.getElementById("icon").src = data;
-      //var image = document.getElementById("icon");
-      //var fill = context.canvas.createPattern(image,"no-repeat");
-      //buffer.fillStyle = fill;
-      
       else color = "#0000FF";
       buffer.fillStyle = color;
       buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
@@ -173,6 +169,12 @@ var tile_x;// make tile_x variables global
 })();
 
 function finishFloor() {
+	
+	if(sessionStorage.getItem("modify")) {// if modifying a floor
+		window.open('floorPreview.html');// open map previewer
+		window.close();// close editing window
+	} 
+	
 	let fNum = JSON.parse(sessionStorage.getItem("rFloors"));// get numner of floors
 	fNum = fNum - 1;// decrease count
 	
@@ -188,6 +190,9 @@ function finishFloor() {
 }
 
 function inputInfo(){
-	window.open('infoInput.html');
-	window.close();
+	if(grouping.head == null) alert("Please chose tiles to upload information")
+	else {
+		window.open('infoInput.html');
+		window.close();
+	}
 }
