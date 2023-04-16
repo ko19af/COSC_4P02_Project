@@ -30,7 +30,10 @@ function saveToMap() {// this function save the linked list entrys to the hashma
 	let current = list;
 	let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get name of museum
 	let museumMap = JSON.parse(sessionStorage.getItem(museName));// get mapping data
-	let fNum = JSON.parse(sessionStorage.getItem("rFloors"));// get floor number
+	
+	if(sessionStorage.getItem("modify")) fNum = JSON.parse(sessionStorage.getItem("modify"));
+	else fNum = JSON.parse(sessionStorage.getItem("rFloors"));// get floor number
+	
 	let infoMap = museumMap[fNum];// reterive from storage
 	
 	do {// fill in new map data
