@@ -3,11 +3,6 @@
   box-sizing:border-box;
   margin:0;
   padding:0;
-* {
-
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
 
 }
 
@@ -106,31 +101,4 @@ button {
 
 button:hover {
   opacity: 0.8;
-}
-}
-
-html {
-
-  height:100%;
-  width:100%;
-
-}
-
-body {
-
-  align-content:space-around;
-  background-color:#202830;
-  color:#ffffff;
-  display:grid;
-  justify-content:center;
-  min-height:100%;
-  text-align:center;
-  width:100%;
-
-}
-
-canvas {
-
-  background-color:#ffffff;
-
 }
