@@ -74,8 +74,6 @@ document.getElementById("floorPrompt").innerHTML = "Input Layout For Floor: " + 
 
     context.drawImage(buffer.canvas, 0, 0, buffer.canvas.width, buffer.canvas.height, 0, 0, context.canvas.width, context.canvas.height);
 
-    output.innerHTML = "tile_x: " + tile_x + "<br>tile_y: " + tile_y + "<br>value: " + value;
-
     window.requestAnimationFrame(loop);
 
   };
@@ -129,7 +127,7 @@ function submitFloor(){// submit floor plan to next stage of process
 	let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get museum name
 	let museumMap = JSON.parse(sessionStorage.getItem(museName));// get museum map
 	
-	museumMap[fNum] = {layout: map, fInfo: [{eName:" ", location:" ",eEd: " ", floorNum: " ", tile: 0},],};// store floor info into museum map
+	museumMap[fNum] = {layout: map, fInfo: [{eName:" ", location:" ",eEd: " ", floorNum: " ",eInfo: " ", tile: 0},], images: [],};// initialize musuem map with info template// store floor info into museum map
 	sessionStorage.setItem(museName, JSON.stringify(museumMap));// set museum map into storage
 
 	sessionStorage.setItem("floorLayout", JSON.stringify(map));// store floor layout info
