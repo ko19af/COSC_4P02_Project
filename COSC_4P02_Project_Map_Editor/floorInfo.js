@@ -59,11 +59,14 @@ class LinkedList {
 
 const grouping = new LinkedList();// create linked list for storing grouped tiles
 var map;// get floor layout from session storage
+
 if(sessionStorage.getItem("modify")) {// if modifying map
 	let mFloor = JSON.parse(sessionStorage.getItem("modify"));// get floor being modified
 	let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get museum name
 	map = JSON.parse(sessionStorage.getItem(museName))[mFloor].layout;// set map to layout being edited;// get museum info
-}else map = JSON.parse(sessionStorage.getItem("floorLayout"))// get floor layout from session storage
+} else {
+	map = JSON.parse(sessionStorage.getItem("floorLayout"))// get floor layout from session storage
+}
 
 
 var tile_x;// make tile_x variables global
@@ -129,8 +132,8 @@ var tile_x;// make tile_x variables global
   };
   
   
-  function groupTiles() {// allows a user select to tiles to add info to (ADD ability to remove tiles already selected)
-  	const eInfo = {eName: " ", location: " ", eED: " ", floorNum: " ", tile: 0,};
+  function groupTiles() {// allows a user select to tiles to add info to
+  	const eInfo = {eName: " ", location: " ", eED: " ", floorNum: " ", eInfo: " ", tile: 0,};
   	var position = tile_x;// x-axis position on tile map
   	
   	for(var i = 0; i < tile_y; i++) {// for each row
@@ -169,24 +172,8 @@ var tile_x;// make tile_x variables global
 })();
 
 function finishFloor() {
-	
-	if(sessionStorage.getItem("modify")) {// if modifying a floor
-		window.open('floorPreview.html');// open map previewer
-		window.close();// close editing window
-	} 
-	
-	let fNum = JSON.parse(sessionStorage.getItem("rFloors"));// get numner of floors
-	fNum = fNum - 1;// decrease count
-	
-	if(fNum <= 0) {// if nu o more floors to add
-		window.open('floorPreview.html');// open prevew page to view built map
-		window.close();// close current window
-	}else {// if still more floors to add
-		sessionStorage.setItem("rFloors",JSON.stringify(fNum));// set new floor count
-		window.open('floorPlan.html')// open floor planner page
-		window.open("floorPlan.html");
-		window.close();// close window
-	}
+	window.open('Image.html');// open Image uploader
+	window.close();// close editing window
 }
 
 function inputInfo(){
