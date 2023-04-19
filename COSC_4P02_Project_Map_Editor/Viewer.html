@@ -1,46 +1,32 @@
 <!DOCTYPE html>
 
-<html>
-
   <head>
-</head>
-<body onload = "buttonMaker()" style="text-align:center">
 
-
-
-    <title>Map Preview</title>
-
+    <title>Information Input</title>
     <meta name = "viewport" content = "width=device-width">
-
-    <link href = "previewPage.css" rel = "stylesheet" type = "text/css">
-
+    <link href = "tile.css" rel = "stylesheet" type = "text/css">
   </head>
 
-  <body>
+  <body onload="loadMaps()">
 
-    <h1>Map Preview</h1>
+<ul id="navbar">
+  <li><a class="active" href="Search.html">Home</a></li>
+  <li><a href="Login.html">Login</a></li>
+  <li><a href="Info.html">Contact</a></li>
+  
+  <li style="float:right"><a class="active" href="#about">About</a></li>
+</ul>
 
-    <p style = "font-size:1.25em">output</p>
+
+    <h1>Select Museum you wish to view</h1>
     
-
-<div class="row">
-  <div class="column left" style="background-color:#aaa;">
-    <h2>Column 1</h2>
-    <p id="info">Floor info goes in here</p>
+    <div class="column middle" style="background-color:#bbb;">
+    <h2>Available Museums</h2>
+    <p id ="buttons"></p>
   </div>
-  <div class="column middle" style="background-color:#bbb;">
-    <canvas></canvas>
-  </div>
-  <div class="column right" style="background-color:#ccc;">
-    <h2>Column 3</h2>
-    <p id ="buttons">buttons to traverse floors goes here</p>
-  </div>
-</div>
-    
-</div>
 
-    <script src = "floorPreview.js" type = "text/javascript"></script>
-
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js" type = "text/javascript"></script>
+    <script src = "dataBase.js" type = "text/javascript"></script>
   </body>
 
 </html>
