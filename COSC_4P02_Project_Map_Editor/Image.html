@@ -1,0 +1,145 @@
+<html>
+	<head>
+
+    <title>Image Uploader</title>
+    <meta name = "viewport" content = "width=device-width">
+    <link href = "tile.css" rel = "stylesheet" type = "text/css">
+  </head>
+
+	<body>
+		<label>Image Name</label> <input type="text" id="namebox"> 
+		<label id="extlab"></label><br>
+		<img id="myimg" height="200px" width="200px" border="5px" white solid; class="center"> <label id="upprogress"></label> <br><br>
+		
+		<div class="btn-group">
+		<button id="selbtn">Select Image</button>
+		<button id="upbtn">Upload Image</button>
+		<button id="finbtn">Finish Upload</button>
+		</div>
+		
+		<script type="module">
+  		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+  		
+  		const firebaseConfig = {
+   		 apiKey: "AIzaSyDXoy8ml8_5D42UunRfP4mGr5Soi5psjlw",
+   		 authDomain: "cosc-4p02-interactive-map.firebaseapp.com",
+   		 databaseURL: "https://cosc-4p02-interactive-map-default-rtdb.firebaseio.com",
+   		 projectId: "cosc-4p02-interactive-map",
+ 		   storageBucket: "cosc-4p02-interactive-map.appspot.com",
+    		messagingSenderId: "1004343153704",
+  		  appId: "1:1004343153704:web:a011fe90aec519845e511d",
+    		measurementId: "G-P0LB44W86S"
+  		};
+
+  		// Initialize Firebase
+  		const app = initializeApp(firebaseConfig);
+  		
+  		import {getStorage, ref as sRef, uploadBytesResumable, getDownloadURL}
+  		 from "https://www.gstatic.com/firebasejs/9.19.1/firebase-storage.js";
+  		
+  		var files = [];
+  		var reader = new FileReader();
+  		
+  		var namebox = document.getElementById('namebox');
+  		var extlab = document.getElementById('extlab');
+  		var myimg = document.getElementById('myimg');
+  		var proglab = document.getElementById('upprogress');
+  		var SelBtn = document.getElementById('selbtn');
+  		var UpBtn = document.getElementById('upbtn');
+  		var FinBtn = document.getElementById('finbtn');
+  		
+  		var input = document.createElement('input');
+  		input.type = 'file';
+  		
+  		input.onchange = e =>{
+  			files = e.target.files;
+  			var extention = GetFileExt(files[0]);
+  			var name = GetFileName(files[0]);
+  			namebox.value = name;
+  			extlab.innerHTML = extention;
+  			reader.readAsDataURL(files[0]);
+  		}
+  		
+  		reader.onload = function() {
+  			myimg.src = reader.result;
+  		}
+  		
+  		SelBtn.onclick = function() {
+  			input.click();
+  		}
+  		
+  		
+  		function GetFileExt(file) {
+  			var temp = file.name.split('.');
+  			var ext = temp.slice((temp.length-1),(temp.length));
+  			return '.' + ext[0];
+  		}
+  		
+  		function GetFileName(file) {
+  			var temp = file.name.split('.');
+  			var fname = temp.slice(0,-1).join('.');
+  			return fname;
+  		}
+  		
+  		async function UploadProcess() {
+  			var ImgToUpload = files[0];
+  			var ImgName = namebox.value + extlab.innerHTML;
+  			if(!ValidateName()){
+  				alert('name cannot contain ".", "#", "$", "[", or "]"');
+  				return;
+  			}
+  			const metaData = {
+  				contentType: ImgToUpload.type
+  			}
+  			const storage = getStorage();
+  			const storageRef = sRef(storage, "Images/"+ImgName);
+  			const UploadTask = uploadBytesResumable(storageRef, ImgToUpload, metaData);
+  			UploadTask.on('state-changed', (snapshot)=>{
+  				var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  				proglab.innerHTML = "Upload "+ progress + "%";
+  			},
+  			(error) =>{
+  				alert("error: image not uploaded");
+  			},
+  			()=>{
+  				getDownloadURL(UploadTask.snapshot.ref).then((downloadURL)=>{
+  					let name = JSON.parse(sessionStorage.getItem("mInfo")).mName;
+  					let museumMap = JSON.parse(sessionStorage.getItem(name));
+  					let floor = JSON.parse(sessionStorage.getItem("rFloors"));
+  					museumMap[floor].images.push(downloadURL);
+  					sessionStorage.setItem(name, JSON.stringify(museumMap));
+  					alert("Image Uploaded");
+  				});
+  			}
+  			);
+  		}
+  		
+  		function ValidateName(){
+  			var regex = /[\.#$\[\]]/  // create list of illegal character in picture name
+  			return !(regex.test(namebox.value));// if file name contains any of these characters
+  		}
+  		
+  		function finishUpload() {
+  			if(sessionStorage.getItem("modify")) {// if modifying a floor
+					window.open('floorPreview.html');// open map previewer
+					window.close();// close editing window
+				} 
+				
+				let fNum = JSON.parse(sessionStorage.getItem("rFloors"));// get numner of floors
+				fNum = fNum - 1;// decrease count
+				
+				if(fNum <= 0) {// if nu o more floors to add
+					window.open('floorPreview.html');// open prevew page to view built map
+					window.close();// close current window
+				} else{// if still more floors to add
+						sessionStorage.setItem("rFloors",JSON.stringify(fNum));// set new floor count
+						window.open('floorPlan.html');// open floor planner page
+						window.close();// close window
+	}
+}
+  		
+  		UpBtn.onclick = UploadProcess;
+  		FinBtn.onclick = finishUpload;
+		</script>
+	</body>
+</html>
