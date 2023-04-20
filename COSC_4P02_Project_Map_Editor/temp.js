@@ -12,24 +12,25 @@ class LinkedList {
 		this.head = new Node(data, this.head);
 	}
 	insertAt(data, tile){// Insert at tile
-		if(tile < this.head.data.tile){//insert at first
-			this.head = new Node(data, this.head);
-			return;
-		}
-		const node = new Node(data);// create new node to hold info
-		let current = this.head;// create poiinter to traverse list
-		let previous = current;
-		while( previous.next != null && current.data.tile < tile) {
-			previous = current;
-			current = current.next;
-		}
-		if(previous.next == null) {
-			previous.next = node;
-			return;
-		}
-		node.next = current;
-		previous.next = node;
-	}
+  if(tile < this.head.data.tile){//insert at first
+    this.head = new Node(data, this.head);
+    return;
+  }
+  const node = new Node(data);// create new node to hold info
+  let current = this.head;// create poiinter to traverse list
+  let previous = current;
+  while (current != null && current.data.tile < tile) {
+    previous = current;
+    current = current.next;
+  }
+  if(previous.next == null) {
+      previous.next = node;
+      return;
+  }
+  node.next = current;
+  previous.next = node;
+}
+
 	removeAt(tile){// Remove tile
 		let current = this.head;
 		let previous;
@@ -56,8 +57,15 @@ class LinkedList {
 	}
 };
 const grouping = new LinkedList();// create new linked list
-const info = new Map();// create hash map
-var map, tile_x;// make map and tile_x variables global
+//const info = new Map();// create hash map
+if(sessionStorage.getItem("modify")) {// if modifying map
+  let mFloor = JSON.parse(sessionStorage.getItem("modify"));// get floor being modified
+  let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get museum name
+  map = JSON.parse(sessionStorage.getItem(museName))[mFloor].layout;// set map to layout being edited;// get museum info
+} else {
+  map = JSON.parse(sessionStorage.getItem("floorLayout"))// get floor layout from session storage
+}
+var map, tile_x, tile_y;// make map and tile_x variables global
 
 (function() { 
 
@@ -67,6 +75,7 @@ var map, tile_x;// make map and tile_x variables global
   
   
   display = {
+    selectedTile: null,
 
     buffer:document.createElement("canvas").getContext("2d"), 
     context:document.querySelector("canvas").getContext("2d"),
@@ -86,6 +95,7 @@ var map, tile_x;// make map and tile_x variables global
       for (let index = layout.map.length - 1; index > -1; -- index) {
   
         var value = layout.map[index];
+        //console.log('map value:', value);
         var source_x = (value % this.tile_sheet.columns) * this.tile_sheet.tile_width;
         var source_y = Math.floor(value / this.tile_sheet.columns) * this.tile_sheet.tile_height;
       
@@ -100,18 +110,15 @@ var map, tile_x;// make map and tile_x variables global
 
     },
 
-    
     resize:function(event) {
-
-      display.context.canvas.width = document.documentElement.clientWidth - 16;
-      if (display.context.canvas.width > document.documentElement.clientHeight - 16) {
-        display.context.canvas.width = document.documentElement.clientHeight - 16;
-      }
-      display.context.canvas.height = display.context.canvas.width * display.height_width_ratio;
-      display.buffer.imageSmoothingEnabled = display.context.imageSmoothingEnabled = false;
-      display.render();
-
+    display.context.canvas.width = Math.floor(document.documentElement.clientWidth - 32);
+    if (display.context.canvas.width > document.documentElement.clientHeight) {
+      display.context.canvas.width = Math.floor(document.documentElement.clientHeight);
     }
+    display.context.canvas.height = Math.floor(display.context.canvas.width * 0.5625);
+    display.render();
+  }
+    
   };
   controller = {
 
@@ -124,31 +131,46 @@ var map, tile_x;// make map and tile_x variables global
       // store the position of the move event inside the pointer variables
       controller.pointer_x = event.clientX - rectangle.left;
       controller.pointer_y = event.clientY - rectangle.top;
+      
     }
   };
-  function groupTiles() {// allows a user select to tiles to add info to (ADD ability to remove tiles already selected)
-  	const eInfo = {eName: " ", location: " ", eED: " ", floorNum: " ", tile: 0,};
-  	var position = tile_x;// x-axis position on tile map
-  	for(var i = 0; i < tile_y; i++) {// for each row
-  	   position += 16;// adjust position of tile
-  	}
-  	if(layout.map[position] == 1) {// if selected a wall tile
-  		alert("invalid position to add info");// tell user can't write there
-  	}else if(layout.map[position] == 2) {// if selected an already choosen floor tile
-  		grouping.removeAt(position);
-  		layout.map[position] = 0;
-  	}else {// if selected floor tile
-  		eInfo.tile = position;// store tile that is being grouped
-  		if(grouping.head == null) {// if grouping is empty
-  			grouping.insertFirst(eInfo);
-  		}else {// if grouping is not empty
-  			grouping.insertAt(eInfo, position);// store tile in appropriate position
-  		}
-  		grouping.printListData();
-  		layout.map[position] = 2;
-  	}
-  	display.render();
-  };
+   function groupTiles() {
+  const eInfo = {eName: " ", location: " ", eED: " ", floorNum: " ", tile: 0};
+  // calculate the row and column of the clicked tile
+  const tile_width = display.tile_sheet.tile_width;
+  const tile_height = display.tile_sheet.tile_height;
+  const row = Math.floor(controller.pointer_y / tile_height);
+  const col = Math.floor(controller.pointer_x / tile_width);
+  console.log("row: ",row);
+  console.log("column: ",col);
+ 
+  //calculate the position of the clicked tile in the map array
+  const position = row * layout.columns + col;
+  console.log("poisition: ",position);
+  selectedTile = position;
+  
+
+  //check if the clicked tile is a wall tile
+  if(layout.map[position] == 0) {
+    alert("invalid position to add info");
+  
+  } else if(layout.map[position] == 2) {
+    grouping.removeAt(position);
+    layout.map[position] = 1;
+  
+  } else {
+    eInfo.tile = position;
+    if(grouping.head == null) {
+      grouping.insertFirst(eInfo);
+    } else {
+      grouping.insertAt(eInfo, position);
+    }
+    layout.map[position] = 2;
+  }
+  display.render();
+};
+ 
+
   layout = {
 	 map: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	 		0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,0,
@@ -205,15 +227,15 @@ var map, tile_x;// make map and tile_x variables global
   window.requestAnimationFrame(loop);
 
 })();
-function submitInfo(form) {//collect information from form and store to associated tiles	
-var value= document.getElementsByName('wing');// create array holding radio buttons
-var wing;// create varialbe to hold value of selected radio button
-for (var radio of value){// go through all of the radio buttons
-if (radio.checked) {// if button was checked
-wing = radio.value;// collect value
-break;// exit search
+function finishFloor() {
+  window.open('Image.html');// open Image uploader
+  window.close();// close editing window
 }
+
+function inputInfo(){
+  if(grouping.head == null) alert("Please chose tiles to upload information")
+  else {
+    window.open('infoInput.html');
+    window.close();
+  }
 }
-if(wing == null) alert("Please sleect wing");
-else alert(form.eName.value  + " " + form.endDate.value + " " + form.floor.value + " " + wing);
-};
