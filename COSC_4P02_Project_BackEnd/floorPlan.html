@@ -4,7 +4,7 @@
 
   <head>
 
-    <title>Map Interface</title>
+    <title>Input Floor Layout</title>
 
     <meta name = "viewport" content = "width=device-width">
 
@@ -16,16 +16,15 @@
 
     <h1>Map Interface</h1>
 
-    <p style = "font-size:1.25em">output</p>
+    <p id="floorPrompt"></p>
 
     <canvas></canvas>
     
     <div class="btn-group">
-    <button onclick='inputInfo()'>Fill info</button>
-    <button onclick='finishFloor()'>Submit Floor Info</button>
+    <button onclick='submitFloor()'>Submit Floor Plan</button>
     </div>
-
-    <script src = "temp.js" type = "text/javascript"></script>
+    
+    <script src = "floorPlan.js" type = "text/javascript"></script>
 
   </body>
 
