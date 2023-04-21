@@ -19,6 +19,18 @@ const firebaseApp =initializeApp( {
     measurementId: "G-P0LB44W86S"
   });
 
+let loginForm = document.getElementsByClassName("login");
+const loginButton = document.getElementById("Login_submit");
+loginButton.addEventListener("click", (e)=>{
+    e.preventDefault();
+
+    let userName = document.getElementsByName("uname");
+    let pass = document.getElementsByName("pass");
+    console.log();
+    alert('username : '+ userName);
+    alert('pass : '+ pass);
+})
+
 const auth = getAuth(firebaseApp);
 onAuthStateChanged(auth, user => {
     if (user != null){

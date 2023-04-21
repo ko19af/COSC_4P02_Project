@@ -5,17 +5,43 @@
 <head> 
     <meta charset= "UTF-8">
     <meta name ="viewport" content="width = device-width,initial-scale=1.0">
-    <title> loging</title>
-    
-    <script type = 'module' src = "/Login.js">
-    
-    </script>
-    </head>
+    <title> log in</title>
+    <link href = "tile.css" rel = "stylesheet" type = "text/css">
+    <ul id="navbar">
+        <li><a class="active" href="Search.html">Home</a></li>
+        <li><a href="Login.html">Login</a></li>
+        <li><a href="Info.html">Contact</a></li>
+
+        <li style="float:right"><a class="active" href="#about">About</a></li>
+    </ul>
+
+
+</head>
+
 
     <body>
-        
-        
-    
-    
+
+
+    <form action ="Login.js" method="post">
+        <div class="login_container">
+
+            <div class ="login">
+                <label for="uname"><b>UserName</b></label>
+                <input type="text" placeholder="Enter UserName" name ="uname" required>
+                <label for="pass"><b>Password</b></label>
+                <input type ="password" placeholder="Enter Password" name="pass" required>
+
+                <button id ="Login_submit" type = "submit" name = "submitbutton">Login</button>
+
+            </div>
+        </div>
+
+
+    </form>
+
+    <script type = 'module' src = "./Login.js"></script>
+
+
+
     </body>
 </html>
