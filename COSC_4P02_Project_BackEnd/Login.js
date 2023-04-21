@@ -24,11 +24,11 @@ const loginButton = document.getElementById("Login_submit");
 loginButton.addEventListener("click", (e)=>{
     e.preventDefault();
 
-    let userName = document.getElementsByName("uname");
-    let pass = document.getElementsByName("pass");
+    let userName = document.getElementById("uname");
+    let pass = document.getElementById('pass');
     console.log();
-    alert('username : '+ userName);
-    alert('pass : '+ pass);
+    alert('username : '+ userName.value);
+    alert('pass : '+ pass.value);
 })
 
 const auth = getAuth(firebaseApp);
