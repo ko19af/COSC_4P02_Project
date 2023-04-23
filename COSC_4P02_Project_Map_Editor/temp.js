@@ -142,6 +142,7 @@ var map, tile_x, tile_y;// make map and tile_x variables global
     var col = Math.floor(canvas_x / tile_width);
     var position = row * layout.columns + col;
     display.selectedTile = position;
+    display.render();
   }
 };
 
@@ -158,7 +159,7 @@ var map, tile_x, tile_y;// make map and tile_x variables global
   console.log("input:",value);
   console.log("tile: ",layout.map[tile]);
   // Check if the selected tile's current value is set to 0
-  if (layout.map[tile] != 0) {
+  if (layout.map[tile] != 0 ) {
     // Update the map with the new value for the selected tile element
     layout.map[tile] = value;
 
@@ -184,7 +185,7 @@ var map, tile_x, tile_y;// make map and tile_x variables global
 	 		0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,
 	 		0,1,1,1,1,1,0,1,1,1,1,0,1,1,1,0,
 	 		0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
-	 		0,1,1,1,1,2,0,1,1,1,1,0,1,1,2,0,
+	 		0,1,1,1,1,1,0,1,1,1,1,0,1,1,1,0,
 	 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     
 
@@ -221,7 +222,7 @@ var map, tile_x, tile_y;// make map and tile_x variables global
     display.resize();
 
   });
-  display.tile_sheet.image.src = "tile-graphics2.png";
+  display.tile_sheet.image.src = "map-graphics.png";
   window.addEventListener("resize", display.resize, {passive:true});
   display.context.canvas.addEventListener("mousemove", controller.move);
   display.context.canvas.addEventListener("touchmove", controller.move, {passive:true});
@@ -243,4 +244,5 @@ function inputInfo(){
     window.open('infoInput.html');
     window.close();
   }
+}
 }
