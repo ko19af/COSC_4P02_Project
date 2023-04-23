@@ -121,55 +121,60 @@ var map, tile_x, tile_y;// make map and tile_x variables global
     
   };
   controller = {
+  pointer_x: 0,
+  pointer_y: 0,
+  move: function(event) {
+    // Get the position of the canvas element on the screen
+    var rectangle = display.context.canvas.getBoundingClientRect();
 
-    // mouse or finger position
-    pointer_x:0,
-    pointer_y:0,
-    move:function(event) {
-      // This will give us the location of our canvas element on screen
-      var rectangle = display.context.canvas.getBoundingClientRect();
-      // store the position of the move event inside the pointer variables
-      controller.pointer_x = event.clientX - rectangle.left;
-      controller.pointer_y = event.clientY - rectangle.top;
-      
-    }
-  };
+    // Update the position of the pointer based on the mouse/finger position
+    controller.pointer_x = event.clientX - rectangle.left;
+    controller.pointer_y = event.clientY - rectangle.top;
+
+    // Get the x and y coordinates of the pointer relative to the canvas
+    var canvas_x = controller.pointer_x * (display.context.canvas.width / rectangle.width);
+    var canvas_y = controller.pointer_y * (display.context.canvas.height / rectangle.height);
+
+    // Update the selected tile based on the pointer position
+    var tile_width = display.tile_sheet.tile_width;
+    var tile_height = display.tile_sheet.tile_height;
+    var row = Math.floor(canvas_y / tile_height);
+    var col = Math.floor(canvas_x / tile_width);
+    var position = row * layout.columns + col;
+    display.selectedTile = position;
+  }
+};
+
    function groupTiles() {
-  const eInfo = {eName: " ", location: " ", eED: " ", floorNum: " ", tile: 0};
-  // calculate the row and column of the clicked tile
+  // Calculate the row and column of the clicked tile
   const tile_width = display.tile_sheet.tile_width;
   const tile_height = display.tile_sheet.tile_height;
   const row = Math.floor(controller.pointer_y / tile_height);
   const col = Math.floor(controller.pointer_x / tile_width);
-  console.log("row: ",row);
-  console.log("column: ",col);
- 
-  //calculate the position of the clicked tile in the map array
-  const position = row * layout.columns + col;
-  console.log("poisition: ",position);
-  selectedTile = position;
+  const tile = row * layout.columns + col;
   
+  // Prompt the user to input a new value for the selected tile element
+  const value = parseInt(prompt("Enter the amenity you wish to add to this location by inputting the corresponding number: \n     Washroom/Bathroom \t 2 \n     Help Desk/Centre \t 3 \n     Elevator \t 4 \n     Stairwell \t 5 \n     Gift Shop \t 6 \n     Exit/Emergency Exit \t 7"));
+  console.log("input:",value);
+  console.log("tile: ",layout.map[tile]);
+  // Check if the selected tile's current value is set to 0
+  if (layout.map[tile] != 0) {
+    // Update the map with the new value for the selected tile element
+    layout.map[tile] = value;
 
-  //check if the clicked tile is a wall tile
-  if(layout.map[position] == 0) {
-    alert("invalid position to add info");
-  
-  } else if(layout.map[position] == 2) {
-    grouping.removeAt(position);
-    layout.map[position] = 1;
-  
+    // Render the map again with the updated tile
+    
+
+    // Update the linked list with the new tile information
+    grouping.removeAt(tile);
+    grouping.insertAt({tile: tile, value: value}, tile);
+
   } else {
-    eInfo.tile = position;
-    if(grouping.head == null) {
-      grouping.insertFirst(eInfo);
-    } else {
-      grouping.insertAt(eInfo, position);
-    }
-    layout.map[position] = 2;
+    alert("The selected tile's current value is 0.");
   }
   display.render();
-};
- 
+}
+
 
   layout = {
 	 map: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
