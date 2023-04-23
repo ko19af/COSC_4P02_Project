@@ -142,6 +142,7 @@ var map, tile_x, tile_y;// make map and tile_x variables global
     var col = Math.floor(canvas_x / tile_width);
     var position = row * layout.columns + col;
     display.selectedTile = position;
+    display.render();
   }
 };
 
@@ -158,7 +159,7 @@ var map, tile_x, tile_y;// make map and tile_x variables global
   console.log("input:",value);
   console.log("tile: ",layout.map[tile]);
   // Check if the selected tile's current value is set to 0
-  if (layout.map[tile] != 0) {
+  if (layout.map[tile] != 0 ) {
     // Update the map with the new value for the selected tile element
     layout.map[tile] = value;
 
@@ -243,4 +244,5 @@ function inputInfo(){
     window.open('infoInput.html');
     window.close();
   }
+}
 }
