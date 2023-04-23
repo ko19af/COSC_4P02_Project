@@ -1,3 +1,11 @@
+import {
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut,
+    createUserWithEmailAndPassword
+} from 'https://www.gstatic.com/firebasejs/9.6.8/firebase-auth.js';
+
 const firebaseConfig = {
     apiKey: "AIzaSyDXoy8ml8_5D42UunRfP4mGr5Soi5psjlw",
     authDomain: "cosc-4p02-interactive-map.firebaseapp.com",
@@ -12,61 +20,54 @@ const firebaseConfig = {
 // initialize firebase
 firebase.initializeApp(firebaseConfig);
 
-
-import {
-    initializeApp
-} from 'https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js';
-
-import {
-    getAuth,
-    onAuthStateChanged,
-    signInWithEmailAndPassword,
-    signOut
-} from 'https://www.gstatic.com/firebasejs/9.6.8/firebase-auth.js';
-
 // reference database
+var database = firebase.database();
+const auth = firebase.auth();
 
 const loginForm = document.getElementsByClassName("login");
 const registerButton = document.getElementById("registerButton");
 registerButton.addEventListener("click", (e)=>{
     e.preventDefault();
-    alert("registered button");
 
-    const userName = document.getElementById("uname").value;
-    const pass = document.getElementById('pass').value;
-    register(userName,pass);
+    const email = document.getElementById("uname").value;
+    const password = document.getElementById('pass').value;
+    register(email,password);
 
 })
 
-function register(userName,pass){
-    const auth = getAuth(firebaseApp);
 
-    var database = firebase.database();
-    if (ValidateName(userName) === false || validate_pass(pass) === false){
+function register(email,password){
+   // const auth = getAuth(app);
+
+    if (ValidateName(email) === false || validate_pass(password) === false){
 
     }
-    auth.createUserWithEmailAndPassword(userName,pass)
+
+    const auth = firebase.getAuth;
+firebase.auth().createUserWithEmailAndPassword(email,password)
         .then(function(){
             var user = auth.currentUser;
             var database_ref = database.ref();
 
             var user_data = {
-                userName : email,
-                pass : password,
+                email : email,
+                password : password,
                 last_login : database.now()
-            }
+
+            };
+            alert("created user?");
 
             database_ref.child('users/' +user.uid).set(user_data);
 
         }).catch(function(error){
-            alert("error");
+            alert(error);
     })
 
 }
 
-function validate(email){
+function ValidateName(email){
   let expression = /^[^@]+@\w+(\.\w+)+\w$/
-    if (expression.test(email) == true) {
+    if (expression.test(email) === true) {
         return true;
     }else{
         alert("email not okay")
@@ -83,15 +84,15 @@ function validate_pass(pass){
     }
 }
 
-const auth = getAuth(firebaseApp);
-onAuthStateChanged(auth, user => {
-    if (user != null){
-        console.log('Logged in');
-    
-    }else{
-        console.log('no user');
-    }
-});
+//const auth = getAuth(firebaseConfig);
+// auth.onAuthStateChanged(auth, user => {
+//     if (user != null){
+//         console.log('Logged in');
+//
+//     }else{
+//         console.log('no user');
+//     }
+// });
 
 
 
