@@ -171,20 +171,23 @@
   		
   		function finishUpload() {
   			if(sessionStorage.getItem("modify")) {// if modifying a floor
-					window.open('floorPreview.html');// open map previewer
-					window.close();// close editing window
+					window.location = 'floorPreview.html';// open map previewer
+					//window.open('floorPreview.html');// open map previewer
+					//window.close();// close editing window
 				} 
 				
 				let fNum = JSON.parse(sessionStorage.getItem("rFloors"));// get numner of floors
 				fNum = fNum - 1;// decrease count
 				
 				if(fNum <= 0) {// if nu o more floors to add
-					window.open('floorPreview.html');// open prevew page to view built map
-					window.close();// close current window
+					window.location = 'floorPreview.html';// open prevew page to view built map
+					//window.open('floorPreview.html');// open prevew page to view built map
+					//window.close();// close current window
 				} else{// if still more floors to add
 						sessionStorage.setItem("rFloors",JSON.stringify(fNum));// set new floor count
-						window.open('floorPlan.html');// open floor planner page
-						window.close();// close window
+						window.location = 'floorPlan.html';// open floor planner page
+						//window.open('floorPlan.html');// open floor planner page
+						//window.close();// close window
 	}
 }
   		

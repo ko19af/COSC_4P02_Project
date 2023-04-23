@@ -189,16 +189,19 @@ function displayImages(){
 }
 
 function changeLayout() {
-	window.open("floorPlan.html");// open floor editor
-	window.close();// close window
+	window.location = 'floorPlan.html';
+	//window.open("floorPlan.html");// open floor editor
+	//window.close();// close window
 }
 
 function changeInfo() {
-	window.open("floorInfo.html");// open floor information editor
-	window.close();// close window
+	window.location = 'floorInfo.html';
+	//window.open("floorInfo.html");// open floor information editor
+	//window.close();// close window
 }
 
 function changeImages() {
-	window.open("Image.html");// open image information editor
-	window.close();// close window
+	window.location = 'Image.html';
+	//window.open("Image.html");// open image information editor
+	//window.close();// close window
 }

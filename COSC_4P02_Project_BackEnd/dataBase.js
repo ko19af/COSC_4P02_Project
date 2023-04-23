@@ -37,8 +37,9 @@ const firebaseConfig = {
   		});
   		alert("Map saved");
   	}
-  	window.open("Search.html");//open search (main) page
-  	window.close();// close window
+	window.location = 'Search.html';
+  	//window.open("Search.html");//open search (main) page
+  	//window.close();// close window
   }
   
   function deleteMap(e) {
@@ -92,8 +93,9 @@ const firebaseConfig = {
 									var data = snapshot.val();// get javascript value of snapshot
 									sessionStorage.setItem(name, JSON.stringify(data.map));// store map in local storage
 									sessionStorage.setItem("mInfo", JSON.stringify({mName: name}));// store map name in loacal storage
-									window.open("Viewer.html");// open map viewer
-									window.close();// close search window
+									window.location = 'Viewer.html';
+									//window.open("Viewer.html");// open map viewer
+									//window.close();// close search window
 									});
 								})// on click load map info														
 				p.appendChild(x);
@@ -118,8 +120,9 @@ const firebaseConfig = {
 											sessionStorage.setItem("mInfo", JSON.stringify({mName:name,})); // store map name in loacal storage
 										});
 										sessionStorage.setItem("update", JSON.stringify(true));
-										window.open("floorPreview.html"); 
-										window.close();
+										window.location = 'floorPreview.html';
+										//window.open("floorPreview.html"); 
+										//window.close();
 										});
 					b2.appendChild(document.createTextNode("Edit Map"));
 					ab2.appendChild(b2);

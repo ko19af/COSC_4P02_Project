@@ -198,14 +198,16 @@ var tile_x;// make tile_x variables global
 })();
 
 function finishFloor() {
-	window.open('Image.html');// open Image uploader
-	window.close();// close editing window
+	window.location = 'Image.html'; // open Image uploader
+	//window.open('Image.html');// open Image uploader
+	//window.close();// close editing window
 }
 
 function inputInfo(){
 	if(grouping.head == null) alert("Please chose tiles to upload information")
 	else {
-		window.open('infoInput.html');
-		window.close();
+		window.location = 'infoInput.html';
+		//window.open('infoInput.html');
+		//window.close();
 	}
 }

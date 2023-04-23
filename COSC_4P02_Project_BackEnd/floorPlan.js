@@ -155,8 +155,9 @@ function submitFloor(){// submit floor plan to next stage of process
 	sessionStorage.setItem(museName, JSON.stringify(museumMap));// set museum map into storage
 
 	sessionStorage.setItem("floorLayout", JSON.stringify(map));// store floor layout info
-	window.open('floorInfo.html');// open floor information loader page
-	window.close();// close current page
+	window.location = 'floorInfo.html'; // open floor information loader page
+	//window.open('floorInfo.html');
+	//window.close();// close current page
 }
 
 function changeTile(pic) {
