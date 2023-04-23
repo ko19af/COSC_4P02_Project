@@ -4,12 +4,51 @@
     <title>Image Uploader</title>
     <meta name = "viewport" content = "width=device-width">
     <link href = "tile.css" rel = "stylesheet" type = "text/css">
+    <style>
+			img {
+  			border: 5px solid #3c1d55;
+			}
+			/* Create three unequal columns that floats next to each other */
+   .column {
+     float: left;
+     padding: 10px;
+     height: 425px; /* Should be removed. Only for demonstration */
+   }
+   
+   .right {
+     width: 35%;
+   }
+   
+   .middle {
+     width: 65%;
+   }
+   
+   /* Clear floats after the columns */
+   .row:after {
+     content: "";
+     display: table;
+     clear: both;
+   }
+</style>
   </head>
 
 	<body>
 		<label>Image Name</label> <input type="text" id="namebox"> 
-		<label id="extlab"></label><br>
-		<img id="myimg" height="200px" width="200px" border="5px" white solid; class="center"> <label id="upprogress"></label> <br><br>
+		<label id="extlab"></label>
+		
+		<div class="row">
+  		<div class="column middle" style="background-color:#bbb;">
+    		<img id="myimg" style="width:200; height:200;" class="center"> <label id="upprogress"></label> 
+  		</div>
+  
+  		<div class="column right" style="background-color:#ccc;">
+    		<h2><u>Loaded Images</u></h2>
+    		<p id ="buttons">Select Images to Remove</p>
+  		</div>
+  
+		</div>
+		
+		
 		
 		<div class="btn-group">
 		<button id="selbtn">Select Image</button>
@@ -18,6 +57,11 @@
 		</div>
 		
 		<script type="module">
+		
+			if(sessionStorage.getItem("modify")){
+				deleter()
+			}
+		
   		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
   		
   		const firebaseConfig = {
@@ -103,12 +147,18 @@
   			},
   			()=>{
   				getDownloadURL(UploadTask.snapshot.ref).then((downloadURL)=>{
-  					let name = JSON.parse(sessionStorage.getItem("mInfo")).mName;
-  					let museumMap = JSON.parse(sessionStorage.getItem(name));
-  					let floor = JSON.parse(sessionStorage.getItem("rFloors"));
-  					museumMap[floor].images.push(downloadURL);
-  					sessionStorage.setItem(name, JSON.stringify(museumMap));
-  					alert("Image Uploaded");
+  					let name = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get name of musuem
+  					let museumMap = JSON.parse(sessionStorage.getItem(name));// get museum info
+  					var floor;// determine which floor is being modified
+  					if(sessionStorage.getItem("modify")){// if modifying pre-existing floor
+							floor = JSON.parse(sessionStorage.getItem("modify"));
+						}else {// else modifying a new floor
+							floor = JSON.parse(sessionStorage.getItem("rFloors"));
+						}
+  					museumMap[floor].images.push(downloadURL);// push new image url into map info
+  					sessionStorage.setItem(name, JSON.stringify(museumMap));// store map info in session storage
+  					deleter();// refresh deleter buttons
+  					alert("Image Uploaded");// alert user their image has been uploaded
   				});
   			}
   			);
@@ -138,8 +188,31 @@
 	}
 }
   		
-  		UpBtn.onclick = UploadProcess;
-  		FinBtn.onclick = finishUpload;
+  		function deleter(){
+  			let name = JSON.parse(sessionStorage.getItem("mInfo")).mName;
+  			let museumMap = JSON.parse(sessionStorage.getItem(name));
+  			let floor = JSON.parse(sessionStorage.getItem("modify"));
+  			let list = document.getElementById("buttons")// get html element for holding buttons
+  			
+				for (let value = 0; value < museumMap[floor].images.length; value++) {// needs to be altered to add buttons for all floors
+					const newDiv = document.createElement("div");
+					var x = document.createElement("BUTTON");// create button object
+					x.classList.add("buttonC");
+					var newimg = document.createElement("img");// create picture
+					newimg.src = museumMap[floor].images[value];
+					newimg.style = "width:100%;max-width:75px";// set styles of images being displayed
+					x.appendChild(newimg);// attach text to button
+					x.addEventListener("click", function() {museumMap[floor].images.splice(value, value+1);
+																								sessionStorage.setItem(name, JSON.stringify(museumMap));
+															 									list.innerHTML = "";
+															 									deleter();
+															 									});// set which floor is being modified});// attach function to load map on button click
+				newDiv.appendChild(x);
+				list.appendChild(newDiv);//append button to list of buttons
+	}
+  		}
+  		UpBtn.onclick = UploadProcess;// set click reaction for upload button
+  		FinBtn.onclick = finishUpload;// set click reaction for finish button
 		</script>
 	</body>
 </html>
