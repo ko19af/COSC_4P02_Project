@@ -185,7 +185,7 @@ var map, tile_x, tile_y;// make map and tile_x variables global
 	 		0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,
 	 		0,1,1,1,1,1,0,1,1,1,1,0,1,1,1,0,
 	 		0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
-	 		0,1,1,1,1,2,0,1,1,1,1,0,1,1,2,0,
+	 		0,1,1,1,1,1,0,1,1,1,1,0,1,1,1,0,
 	 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     
 
@@ -222,7 +222,7 @@ var map, tile_x, tile_y;// make map and tile_x variables global
     display.resize();
 
   });
-  display.tile_sheet.image.src = "tile-graphics2.png";
+  display.tile_sheet.image.src = "map-graphics.png";
   window.addEventListener("resize", display.resize, {passive:true});
   display.context.canvas.addEventListener("mousemove", controller.move);
   display.context.canvas.addEventListener("touchmove", controller.move, {passive:true});
