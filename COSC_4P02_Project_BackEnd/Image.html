@@ -171,32 +171,36 @@
   		
   		function finishUpload() {
   			if(sessionStorage.getItem("modify")) {// if modifying a floor
-					window.location = 'floorPreview.html';// open map previewer
-					//window.open('floorPreview.html');// open map previewer
-					//window.close();// close editing window
+					window.open('floorPreview.html');// open map previewer
+					window.close();// close editing window
 				} 
 				
 				let fNum = JSON.parse(sessionStorage.getItem("rFloors"));// get numner of floors
 				fNum = fNum - 1;// decrease count
 				
 				if(fNum <= 0) {// if nu o more floors to add
-					window.location = 'floorPreview.html';// open prevew page to view built map
-					//window.open('floorPreview.html');// open prevew page to view built map
-					//window.close();// close current window
+					window.open('floorPreview.html');// open prevew page to view built map
+					window.close();// close current window
 				} else{// if still more floors to add
 						sessionStorage.setItem("rFloors",JSON.stringify(fNum));// set new floor count
-						window.location = 'floorPlan.html';// open floor planner page
-						//window.open('floorPlan.html');// open floor planner page
-						//window.close();// close window
+						window.open('floorPlan.html');// open floor planner page
+						window.close();// close window
 	}
 }
   		
   		function deleter(){
+  			var floor;
   			let name = JSON.parse(sessionStorage.getItem("mInfo")).mName;
   			let museumMap = JSON.parse(sessionStorage.getItem(name));
-  			let floor = JSON.parse(sessionStorage.getItem("modify"));
-  			let list = document.getElementById("buttons")// get html element for holding buttons
   			
+  			if(sessionStorage.getItem("modify")) {// if modifying floor
+  				floor = JSON.parse(sessionStorage.getItem("modify"));
+  			}else {// if creating floor
+  				floor = JSON.parse(sessionStorage.getItem("rFloors"));
+  			}
+  			
+  			let list = document.getElementById("buttons")// get html element for holding buttons
+  			list.innerHTML = "";// clear picture removal area
 				for (let value = 0; value < museumMap[floor].images.length; value++) {// needs to be altered to add buttons for all floors
 					const newDiv = document.createElement("div");
 					var x = document.createElement("BUTTON");// create button object
