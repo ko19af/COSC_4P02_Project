@@ -280,11 +280,12 @@ function ValidateName(email){
 	}
 }
 
+/**
+ * this function is used to check if the password entered is longer than 6 characters or not
+ * used in the Register function
+ * @param pass
+ * @returns {boolean}
+ */
 function validate_pass(pass){
-	if(pass < 6){
-		alert("In validate pass = false");
-		return false;
-
-	}else {return true;
-	}
+	return pass >= 6;
 }
