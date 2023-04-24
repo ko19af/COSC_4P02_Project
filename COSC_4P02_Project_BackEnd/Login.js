@@ -17,24 +17,42 @@ const firebaseConfig = {
     measurementId: "G-P0LB44W86S"
 };
 
+
 // initialize firebase
 firebase.initializeApp(firebaseConfig);
 
 // reference database
-var database = firebase.database();
-const auth = firebase.auth();
+//var database = firebase.database();
 
-const loginForm = document.getElementsByClassName("login");
 const registerButton = document.getElementById("registerButton");
 registerButton.addEventListener("click", (e)=>{
     e.preventDefault();
+    firebase.initializeApp(firebaseConfig);
+
 
     const email = document.getElementById("uname").value;
     const password = document.getElementById('pass').value;
-    register(email,password);
+    login(email,password);
 
-})
+});
 
+function login(email,password){
+    alert("in the login function");
+    const auth = firebase.getAuth;
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            alert("you have logged in!");
+            alert("userName = " + userCredential.user.name);
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert("error code : " + errorCode + "error msg : "+ errorMessage);
+        });
+}
 
 function register(email,password){
    // const auth = getAuth(app);
@@ -75,24 +93,17 @@ function ValidateName(email){
 
     }
 }
-function validate_pass(pass){
-    if(pass < 6){
-        alert("In validate pass = false");
-        return false;
 
-    }else {return true;
-    }
+/**
+ * this function is used to check if the password entered is longer than 6 characters or not
+ * used in the Register function
+ * @param pass
+ * @returns {boolean}
+ */
+function validate_pass(pass){
+    return pass >= 6;
 }
 
-//const auth = getAuth(firebaseConfig);
-// auth.onAuthStateChanged(auth, user => {
-//     if (user != null){
-//         console.log('Logged in');
-//
-//     }else{
-//         console.log('no user');
-//     }
-// });
 
 
 

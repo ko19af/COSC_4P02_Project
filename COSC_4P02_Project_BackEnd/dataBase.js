@@ -168,4 +168,123 @@ function begin(form) {// This function check if a map already exists on the fire
       window.open('floorPlan.html');// open next page
       window.close();// close window as it is no longer needed
   }
-};
+}
+
+
+/// ------------------- LOGIN FUNCTIONS -------------------------------------------------------------------
+
+/// -----------------ACTION LISTENERS ---------------------------------------------------------
+
+// ------Register button action listener
+const registerButton = document.getElementById("registerButton");
+registerButton.addEventListener("click", (e)=>{  // LISTENS TO THE SIGN-UP BUTTON
+	e.preventDefault();
+	const email = document.getElementById("uname").value;
+	const password = document.getElementById('pass').value;
+	register(email,password);
+
+});
+
+// ------Login button action listener
+const loginButton = document.getElementById("loginButton");
+loginButton.addEventListener("click", (e)=>{  // LISTENS TO THE SIGN IN BUTTON
+	e.preventDefault();
+	const email = document.getElementById("uname").value;
+	const password = document.getElementById('pass').value;
+	login(email,password);
+
+});
+
+/// ------------------ACTION LISTENERS END ----------------------------------------
+/**
+ * Register function is used for creating new users in the database
+ * if the email already exists, the user will not be able to create a new account
+ * but will be logged in instead.
+ * @param email
+ * @param password
+ */
+function register(email,password){
+
+	var acceptableName = ValidateName(email);
+	var acceptablePass = validate_pass(password);
+
+	if(acceptableName){
+		if(acceptablePass){
+			const auth = firebase.getAuth;
+			firebase.auth().createUserWithEmailAndPassword(email,password)  // Creates a new user with given email/pass. checks if it exists or not first
+				.then(function(){
+					var user = auth.currentUser;
+					var database_ref = database.ref();
+					var user_data = {
+						email : email,
+						password : password,
+						last_login : database.now()
+					};
+					alert("created user?");
+					database_ref.child('users/' +user.uid).set(user_data);
+				}).catch(function(error){
+				//alert(error);
+			})
+		}else {
+			alert("Password must be atleast 6 characters..")
+		}
+	}else {
+		alert("Email does not follow format..")
+	}
+
+} // register function
+
+/**
+ * Login function is used when the user submits their login information and clicks
+ * the "Sign in" button. This function will check the database for the user credentials and
+ * will then sign them in.
+ * Login function will then check the now logged in users permissions and
+ * display the corresponding webpage.
+ * @param email
+ * @param password
+ */
+function login(email,password){
+	alert("in the login function");
+	firebase.auth().signInWithEmailAndPassword(email, password)
+		.then((userCredential) => {
+			// Signed in
+			const user = userCredential.user;
+			alert("user" + user);
+			alert("you have logged in!");
+			alert("userName = " + userCredential.user.name);
+			//TODO: ADD CREDENTIAL CHECKING
+		})
+		.catch((error) => {
+			const errorCode = error.code;
+			const errorMessage = error.message;
+
+			alert("error code : " + errorCode + "error msg : "+ errorMessage);
+		});
+};//login
+
+/**
+ * ValidateName will check if the entered Email is of an acceptable format
+ * ie something@email.com. if follows format, returns TRUE, Else returns FALSE.
+ * This function is used in the Register function.
+ * @param email
+ * @returns {boolean}
+ * @constructor
+ */
+function ValidateName(email){
+	let expression = /^[^@]+@\w+(\.\w+)+\w$/
+	if (expression.test(email) === true) {
+		return true;
+	}else{
+		return false;
+
+	}
+}
+
+function validate_pass(pass){
+	if(pass < 6){
+		alert("In validate pass = false");
+		return false;
+
+	}else {return true;
+	}
+}
