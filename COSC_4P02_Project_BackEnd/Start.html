@@ -13,21 +13,22 @@
   </head>
 
   <body>
-    <ul id="navbar">
-		<li><a class="active" href="Search.html">Home</a></li>
-		<li><a href="Login.html">Login</a></li>
-		<li><a href="Info.html">Contact</a></li>
-		<li style="float:right"><a class="active" href="#about">About</a></li>
+  
+  	<ul id="navbar">
+			<li><a class="active" href="Search.html">Home</a></li>
+			<li><a href="Login.html">Login</a></li>
+			<li><a href="Info.html">Contact</a></li>
+			<li style="float:right"><a class="active" href="#about">About</a></li>
     </ul>
 
     <h1>Enter Museum Name and Number of Floors</h1>
     
-    <form onsubmit="return begin(this)">
+    <form onsubmit="begin(this)">
     
-    <label for="mName">Museum Name:</label><br>
-    <input type="text" id="mName" name="mName" value="West Niagara Museum"><br>
+    <label for="mName">Enter Museum Name:</label><br>
+    <input type="text" id="mName" name="mName" value=""><br>
     
-    <label for="floors">Number of Floors:</label><br>
+    <label for="floors">Enter Number of Floors:</label><br>
     <input type="text" id="floors" name="floors" value=4><br>
     
     <input type="submit" value="Next" class="buttonC">
