@@ -9,7 +9,31 @@
     <meta name = "viewport" content = "width=device-width">
 
     <link href = "tile.css" rel = "stylesheet" type = "text/css">
-
+    <style>
+			img {
+  			border: 5px solid #3c1d55;
+  			width:100%;
+  			max-width:75px;
+			}
+			/* Create three unequal columns that floats next to each other */
+   		.column {
+     		float: left;
+     		padding: 10px;
+     		height: 425px; /* Should be removed. Only for demonstration */
+   		}
+   		.right {
+     		width: 20%;
+   		}
+   		.middle {
+     		width: 80%;
+     	}
+   		/* Clear floats after the columns */
+   		.row:after {
+     		content: "";
+     		display: table;
+     		clear: both;
+     	}
+		</style>
   </head>
 
   <body>
@@ -18,11 +42,46 @@
 
     <p id="floorPrompt"></p>
 
-    <canvas></canvas>
+    <div class="row">
+  		<div class="column middle" style="background-color:#bbb;">
+    		<canvas></canvas>
+  		</div>
+  
+  		<div class="column right" style="background-color:#ccc;">
+    		<h2><u>Map Tiles: Select Tile to Insert</u></h2>
+    		<p>
+    		<div>
+    				<img onclick = "changeTile(1)";
+						src="https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2F000000.png?alt=media&amp;token=6595a28c-1b6f-44eb-ab96-9e2a9844ab2f"; alt="Wall">
+    				<img onclick = "changeTile(2)";
+						src="https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Fwashroom.png?alt=media&amp;token=93f5eefe-f50f-4d00-b61e-35aa1bbd3eb2"; alt="Bathroom">
+					</div>
+					<div>
+						<img onclick = "changeTile(3)";
+						src="https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Felevator.jpg?alt=media&amp;token=7f31bd3b-e822-4b29-8717-03f9ea022d08"; alt="Elevator">
+						<img onclick = "changeTile(4)";
+						src="https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Fstairs.jpg?alt=media&amp;token=5ccb6d09-8c59-4aea-9d55-ef81b8421535"; alt="Stairs">
+					</div>
+					<div>
+						<img onclick = "changeTile(5)";
+						src="https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2FGiftShop.png?alt=media&amp;token=b81a92d6-0ec3-4ef9-b6cf-24df089a75f5"; alt="Shop">
+						<img onclick = "changeTile(6)";
+						src="https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Fcafeteria.png?alt=media&amp;token=13568169-a036-4639-bc9d-0cfde363bb56"; alt="Cafeteria">
+					</div>
+					<div>
+						<img onclick = "changeTile(7)";
+						src="https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Faid.png?alt=media&amp;token=fc790edd-19e6-4e56-a1ba-fc7b0f106d26"; alt="Aid">
+					</div>
+				</p>
+  		</div>
+		</div>
     
     <div class="btn-group">
-    <button onclick='submitFloor()'>Submit Floor Plan</button>
+    <button onclick='return submitFloor()'>Submit Floor Plan</button>
     </div>
+    
+    
+    
     
     <script src = "floorPlan.js" type = "text/javascript"></script>
 

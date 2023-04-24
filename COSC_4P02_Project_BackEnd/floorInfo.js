@@ -99,13 +99,38 @@ var tile_x;// make tile_x variables global
   };
 
   drawMap = function() {
+  
     for (let index = 0; index < map.length; index ++) {
-      let color;
-      if(map[index] == 0) color = "#FFFFFF";
-      else if(map[index] == 1) color = "#000000";
-      else color = "#0000FF";
-      buffer.fillStyle = color;
-      buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
+    
+    	var img = document.createElement('img');
+		if(map[index] == 0) {
+			buffer.fillStyle = "#FFFFFF";
+			buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
+		} else if(map[index] == 1){
+			buffer.fillStyle = "#000000";
+			buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
+		} else if(map[index] == 2){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Fwashroom.png?alt=media&amp;token=93f5eefe-f50f-4d00-b61e-35aa1bbd3eb2";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 3){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Felevator.jpg?alt=media&amp;token=7f31bd3b-e822-4b29-8717-03f9ea022d08";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 4){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Fstairs.jpg?alt=media&amp;token=5ccb6d09-8c59-4aea-9d55-ef81b8421535";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 5){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2FGiftShop.png?alt=media&amp;token=b81a92d6-0ec3-4ef9-b6cf-24df089a75f5";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 6){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Fcafeteria.png?alt=media&amp;token=13568169-a036-4639-bc9d-0cfde363bb56";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 7){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Faid.png?alt=media&amp;token=fc790edd-19e6-4e56-a1ba-fc7b0f106d26";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);	
+		}else if(map[index] == 8){
+			buffer.fillStyle = "#0000FF";
+      	buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
+		}
     }
   };
 
@@ -142,9 +167,10 @@ var tile_x;// make tile_x variables global
   	
   	if(map[position] == 1) {// if selected a wall tile
   		alert("invalid position to add info");// tell user can't write there
-  	}else if(map[position] == 2) {// if selected an already choosen floor tile
+  	}else if(map[position] == 8) {// if selected an already choosen floor tile
   		grouping.removeAt(position);
-  		map[position] = 0;
+  		restore = JSON.parse(sessionStorage.getItem("floorLayout"))// get floor layout from session storage
+  		map[position] = restore[position];// restore original tile
   	}else {// if selected floor tile
   		eInfo.tile = position;// store tile that is being grouped
   		if(grouping.head == null) {// if grouping is empty
@@ -153,7 +179,7 @@ var tile_x;// make tile_x variables global
   			grouping.insertAt(eInfo, position);// store tile in appropriate position
   		}
   		grouping.printListData();
-  		map[position] = 2;
+  		map[position] = 8;
   	}
   	
   	sessionStorage.setItem("group", JSON.stringify(grouping));// make accessible to other pages
@@ -172,14 +198,16 @@ var tile_x;// make tile_x variables global
 })();
 
 function finishFloor() {
-	window.open('Image.html');// open Image uploader
-	window.close();// close editing window
+	window.location = 'Image.html'; // open Image uploader
+	//window.open('Image.html');// open Image uploader
+	//window.close();// close editing window
 }
 
 function inputInfo(){
 	if(grouping.head == null) alert("Please chose tiles to upload information")
 	else {
-		window.open('infoInput.html');
-		window.close();
+		window.location = 'infoInput.html';
+		//window.open('infoInput.html');
+		//window.close();
 	}
 }

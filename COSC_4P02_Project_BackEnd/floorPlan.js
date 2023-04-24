@@ -1,4 +1,5 @@
 var map;
+var insert = 1;
 
 if(sessionStorage.getItem("modify")) {// if modifying map
 	let mFloor = JSON.parse(sessionStorage.getItem("modify"));// get floor being modified
@@ -53,10 +54,33 @@ document.getElementById("floorPrompt").innerHTML = "Input Layout For Floor: " + 
   drawMap = function() {
 
     for (let index = 0; index < map.length; index ++) {
-
-      buffer.fillStyle = (map[index] == 0)?"#FFFFFF":"#000000";
-      buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
-
+    
+    	var img = document.createElement('img');
+		if(map[index] == 0) {
+			buffer.fillStyle = "#FFFFFF";
+			buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
+		} else if(map[index] == 1){
+			buffer.fillStyle = "#000000";
+			buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
+		} else if(map[index] == 2){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Fwashroom.png?alt=media&amp;token=93f5eefe-f50f-4d00-b61e-35aa1bbd3eb2";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 3){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Felevator.jpg?alt=media&amp;token=7f31bd3b-e822-4b29-8717-03f9ea022d08";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 4){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Fstairs.jpg?alt=media&amp;token=5ccb6d09-8c59-4aea-9d55-ef81b8421535";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 5){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2FGiftShop.png?alt=media&amp;token=b81a92d6-0ec3-4ef9-b6cf-24df089a75f5";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 6){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Fcafeteria.png?alt=media&amp;token=13568169-a036-4639-bc9d-0cfde363bb56";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 7){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Faid.png?alt=media&amp;token=fc790edd-19e6-4e56-a1ba-fc7b0f106d26";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);	
+		}
     }
 
   };
@@ -100,9 +124,9 @@ document.getElementById("floorPrompt").innerHTML = "Input Layout For Floor: " + 
   	for (var i = 0; i < tile_y; i++) {
   		position += 16;
   	}
-  	if(map[position] == 1) {
+  	if(map[position] != 0) {
   		map[position] = 0;
-  	}else map[position] = 1;
+  	}else map[position] = insert;
   	drawMap();
   };
 
@@ -131,6 +155,19 @@ function submitFloor(){// submit floor plan to next stage of process
 	sessionStorage.setItem(museName, JSON.stringify(museumMap));// set museum map into storage
 
 	sessionStorage.setItem("floorLayout", JSON.stringify(map));// store floor layout info
-	window.open('floorInfo.html');// open floor information loader page
-	window.close();// close current page
+	window.location = 'floorInfo.html'; // open floor information loader page
+	//window.open('floorInfo.html');
+	//window.close();// close current page
+}
+
+function changeTile(pic) {
+	
+	insert = pic;// set tile being inserted into map
+	if(insert == 1) alert("Inserting: Wall Tile");// alert user which tile is being inserted into map
+	else if(insert == 2) alert("Inserting: Bathroom Tile");
+	else if(insert == 3) alert("Inserting: Elevator Tile");
+	else if(insert == 4) alert("Inserting: Stair Tile");
+	else if(insert == 5) alert("Inserting: Gift Shop Tile");
+	else if(insert == 6) alert("Inserting: Cafeteria Tile");
+	else if(insert == 7) alert("Inserting: Medical Aid Tile");
 }

@@ -14,7 +14,7 @@
         tools:targetApi="31">
         <activity
             android:name=".openmap"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

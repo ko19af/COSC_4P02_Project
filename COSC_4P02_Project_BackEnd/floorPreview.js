@@ -39,8 +39,32 @@ sessionStorage.setItem("modify", JSON.stringify(1));// initialize modify floor t
   drawMap = function() {
 
     for (let index = 0; index < map.length; index ++) {
-      buffer.fillStyle = (map[index] == 0)?"#FFFFFF":"#000000";
-      buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
+    	var img = document.createElement('img');
+		if(map[index] == 0) {
+			buffer.fillStyle = "#FFFFFF";
+			buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
+		} else if(map[index] == 1){
+			buffer.fillStyle = "#000000";
+			buffer.fillRect((index % 16) * size, Math.floor(index/16) * size, size, size);
+		} else if(map[index] == 2){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Fwashroom.png?alt=media&amp;token=93f5eefe-f50f-4d00-b61e-35aa1bbd3eb2";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 3){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Felevator.jpg?alt=media&amp;token=7f31bd3b-e822-4b29-8717-03f9ea022d08";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 4){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Fstairs.jpg?alt=media&amp;token=5ccb6d09-8c59-4aea-9d55-ef81b8421535";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 5){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2FGiftShop.png?alt=media&amp;token=b81a92d6-0ec3-4ef9-b6cf-24df089a75f5";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 6){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Fcafeteria.png?alt=media&amp;token=13568169-a036-4639-bc9d-0cfde363bb56";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);
+		}else if(map[index] == 7){
+			img.src = "https://firebasestorage.googleapis.com/v0/b/cosc-4p02-interactive-map.appspot.com/o/Images%2Faid.png?alt=media&amp;token=fc790edd-19e6-4e56-a1ba-fc7b0f106d26";
+			buffer.drawImage(img,(index % 16) * size, Math.floor(index/16) * size, size, size);	
+		}
     }
   };
 
@@ -121,7 +145,7 @@ sessionStorage.setItem("modify", JSON.stringify(1));// initialize modify floor t
 function loadMuseData(){
 
 	let list = document.getElementById("buttons")// get html element for holding buttons
-	for (let value = 1; value <= (museumMap.length)-1; value++) {// needs to be altered to add buttons for all floors
+	for (let value = 1; value < (museumMap.length); value++) {// needs to be altered to add buttons for all floors
 		const newDiv = document.createElement("div");
 		var x = document.createElement("BUTTON");// create button object
 		x.classList.add("buttonC");
@@ -165,17 +189,19 @@ function displayImages(){
 }
 
 function changeLayout() {
-	window.open("floorPlan.html");// open floor editor
-	window.close();// close window
+	window.location = 'floorPlan.html';
+	//window.open("floorPlan.html");// open floor editor
+	//window.close();// close window
 }
 
 function changeInfo() {
-	window.open("floorInfo.html");// open floor information editor
-	window.close();// close window
+	window.location = 'floorInfo.html';
+	//window.open("floorInfo.html");// open floor information editor
+	//window.close();// close window
 }
 
-function finished() {// need database interaction code
-	sessionStorage.clear();// clear session storage so it does not interfere with anything else
-	window.open("Search.html");
-	window.close();
+function changeImages() {
+	window.location = 'Image.html';
+	//window.open("Image.html");// open image information editor
+	//window.close();// close window
 }

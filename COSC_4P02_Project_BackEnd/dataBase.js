@@ -86,16 +86,17 @@ const firebaseConfig = {
 				var t = document.createTextNode("View: " + name);// attach button specefic text
 				x.appendChild(t);// attach text to button
 				x.classList.add("buttonC");
-				x.addEventListener("click", function(){var database = firebase.database();
-								        var user_ref = database.ref('Map/' + name);// reference specfic map entry in database
-									user_ref.on('value', function(snapshot) {// get snap shot of data from database
-									var data = snapshot.val();// get javascript value of snapshot
-									sessionStorage.setItem(name, JSON.stringify(data.map));// store map in local storage
-									sessionStorage.setItem("mInfo", JSON.stringify({mName: name}));// store map name in loacal storage
-									window.open("Viewer.html");// open map viewer
-									window.close();// close search window
-									});
-								})// on click load map info														
+				x.addEventListener("click", function(){
+													var database = firebase.database();
+													var user_ref = database.ref('Map/' + name);// reference specfic map entry in database
+													user_ref.on('value', function(snapshot) {// get snap shot of data from database
+													var data = snapshot.val();// get javascript value of snapshot
+													sessionStorage.setItem(name, JSON.stringify(data.map));// store map in local storage
+													sessionStorage.setItem("mInfo", JSON.stringify({mName: name}));// store map name in loacal storage
+													window.open("Viewer.html");// open map viewer
+													window.close();// close search window
+													});
+													})// on click load map info														
 				p.appendChild(x);
   
   				if (true) {// CHANGE TO CHECK FOR ADMIN LOGGED IN
@@ -110,24 +111,26 @@ const firebaseConfig = {
 					var b2 = document.createElement("BUTTON");
 					b2.classList.add("buttonC");
 					b2.classList.add("buttonC");
-					b2.addEventListener("click", function() {var database = firebase.database();
-										var user_ref = database.ref('Map/' + name);// reference specfic map entry in database
-										user_ref.on('value', function(snapshot) {// get snap shot of data from database
-											var data = snapshot.val();// get javascript value of snapshot
-											sessionStorage.setItem(name, JSON.stringify(data.map));// store map in local storage
-											sessionStorage.setItem("mInfo", JSON.stringify({mName:name,})); // store map name in loacal storage
-										});
-										sessionStorage.setItem("update", JSON.stringify(true));
-										window.open("floorPreview.html"); 
-										window.close();
-										});
+					b2.addEventListener("click", function() {
+														var database = firebase.database();
+														var user_ref = database.ref('Map/' + name);// reference specfic map entry in database
+														user_ref.on('value', function(snapshot) {// get snap shot of data from database
+														var data = snapshot.val();// get javascript value of snapshot
+														sessionStorage.setItem(name, JSON.stringify(data.map));// store map in local storage
+														sessionStorage.setItem("mInfo", JSON.stringify({mName:name,})); // store map name in loacal storage
+														});
+														
+														sessionStorage.setItem("update", JSON.stringify(true));
+														window.open("floorPreview.html"); 
+														window.close();
+														});
 					b2.appendChild(document.createTextNode("Edit Map"));
 					ab2.appendChild(b2);
 					var b3 = document.createElement("BUTTON");
 					b3.classList.add("buttonC");
-					b3.addEventListener("click", function() {sessionStorage.setItem("mName", JSON.stringify(name));
-										 deleteMap();
-										 });
+					b3.addEventListener("click", function() {
+													   sessionStorage.setItem("mName", JSON.stringify(name));
+													   deleteMap();});
 					b3.appendChild(document.createTextNode("Delete"));
 					ab2.appendChild(b3);
 					admin2.appendChild(a2);
@@ -143,28 +146,26 @@ const firebaseConfig = {
   }
   
 function begin(form) {// This function check if a map already exists on the firebase storage
-
-	database = firebase.database().ref("Map/");// create reference to firebase database
-	database.on("child_added", function(data) {
-  		data.forEach(function(data){// for each piece of data in the database
-  		if(data.key == "name" && data.val() == mName){// if looking at the name key and has the same name as museum being added
-  				sessionStorage.setItem("noDuplicate", "");// set no duplicate to false
-  				return true;// break out of loop
-  			}
-  		});	
-	});
 	
-	if(!sessionStorage.getItem("noDuplicate")) {
-		sessionStorage.clear();
-		const museumMap = [];//create array for holding museumMap
-		museumMap[0] = {layout: [0], fInfo: [{eName:" ", location:" ",eEd: " ", floorNum: " ",eInfo: " ", tile: 0},], images: [],};// initialize musuem map with info template
-		sessionStorage.setItem("rFloors", JSON.stringify(form.floors.value));// set what floor we are at in the input stage
-		sessionStorage.setItem(form.mName.value, JSON.stringify(museumMap));// initialize hash map to hold map data
-		sessionStorage.setItem("mInfo", JSON.stringify({mName: form.mName.value, numFloors: form.floors.value,}));
-		window.open('floorPlan.html');// open next page
-		window.close();// close window as it is no longer needed
-	}else {
-		alert("Museum already Exist");
-		sessionStorage.clear();
-	}
+	var ref = firebase.database().ref('Map/' + form.mName.value);
+	ref.once('value').then(function(snapshot) {
+    if(snapshot.exists()) {
+    	sessionStorage.setItem("Duplicate", JSON.stringify(true));
+  } else {
+  		sessionStorage.setItem("Duplicate", JSON.stringify(false));
+  }});
+
+	if(JSON.parse(sessionStorage.getItem("Duplicate"))){
+    	alert("Museum Already Exists");
+    	sessionStorage.clear();
+  }else{
+  		sessionStorage.clear();
+  		const museumMap = [];//create array for holding museumMap
+      museumMap[0] = {layout: [0], fInfo: [{eName:" ", location:" ",eEd: " ", floorNum: " ",eInfo: " ", tile: 0},], images: [],};// initialize musuem map with info template
+      sessionStorage.setItem("rFloors", JSON.stringify(form.floors.value));// set what floor we are at in the input stage
+      sessionStorage.setItem(form.mName.value, JSON.stringify(museumMap));// initialize hash map to hold map data
+      sessionStorage.setItem("mInfo", JSON.stringify({mName: form.mName.value, numFloors: form.floors.value,}));
+      window.open('floorPlan.html');// open next page
+      window.close();// close window as it is no longer needed
+  }
 };
