@@ -135,6 +135,7 @@ document.getElementById("floorPrompt").innerHTML = "Input Layout For Floor: " + 
   context.canvas.addEventListener("touchmove", controller.move, {passive:true});
   context.canvas.addEventListener("touchstart", controller.move, {passive:true});
   context.canvas.addEventListener("click", changeColor);
+  context.canvas.addEventListener("touchend", changeColor);
   resize();
 
   window.requestAnimationFrame(loop);
