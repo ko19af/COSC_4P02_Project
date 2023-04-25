@@ -45,7 +45,6 @@ function saveToMap() {// this function save the linked list entrys to the hashma
 	
 	museumMap[fNum] = infoMap;// set floor number in museum map to updated floor map
 	sessionStorage.setItem(museName,JSON.stringify(museumMap));// set new map data
-	window.location = 'floorInfo.html';
-	//window.open("floorInfo.html");
-	//window.close();// close window
+	window.open("floorInfo.html");
+	window.close();// close window
 };
