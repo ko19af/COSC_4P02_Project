@@ -58,8 +58,8 @@
 		
 		<script type="module">
 		
-			if(sessionStorage.getItem("modify")){
-				deleter()
+			if(sessionStorage.getItem("modify")){// if modifying the floor maps images
+				deleter()// load all images on the floor to the deleter
 			}
 		
   		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
@@ -155,7 +155,11 @@
 						}else {// else modifying a new floor
 							floor = JSON.parse(sessionStorage.getItem("rFloors"));
 						}
-  					museumMap[floor].images.push(downloadURL);// push new image url into map info
+						if(museumMap[floor].images[0] == ""){
+							museumMap[floor].images[0] = downloadURL;
+						}else {
+							museumMap[floor].images.push(downloadURL);// push new image url into map info
+						}
   					sessionStorage.setItem(name, JSON.stringify(museumMap));// store map info in session storage
   					deleter();// refresh deleter buttons
   					alert("Image Uploaded");// alert user their image has been uploaded
@@ -201,22 +205,24 @@
   			
   			let list = document.getElementById("buttons")// get html element for holding buttons
   			list.innerHTML = "";// clear picture removal area
-				for (let value = 0; value < museumMap[floor].images.length; value++) {// needs to be altered to add buttons for all floors
-					const newDiv = document.createElement("div");
-					var x = document.createElement("BUTTON");// create button object
-					x.classList.add("buttonC");
-					var newimg = document.createElement("img");// create picture
-					newimg.src = museumMap[floor].images[value];
-					newimg.style = "width:100%;max-width:75px";// set styles of images being displayed
-					x.appendChild(newimg);// attach text to button
-					x.addEventListener("click", function() {museumMap[floor].images.splice(value, value+1);
+  			
+  			if(museumMap[floor].images[0] != ""){// if there are images to be removed
+  				for (let value = 0; value < museumMap[floor].images.length; value++) {// needs to be altered to add buttons for all floors
+						const newDiv = document.createElement("div");
+						var x = document.createElement("BUTTON");// create button object
+						x.classList.add("buttonC");
+						var newimg = document.createElement("img");// create picture
+						newimg.src = museumMap[floor].images[value];
+						newimg.style = "width:100%;max-width:75px";// set styles of images being displayed
+						x.appendChild(newimg);// attach text to button
+						x.addEventListener("click", function() {museumMap[floor].images.splice(value, value+1);
 																								sessionStorage.setItem(name, JSON.stringify(museumMap));
-															 									list.innerHTML = "";
 															 									deleter();
 															 									});// set which floor is being modified});// attach function to load map on button click
-				newDiv.appendChild(x);
-				list.appendChild(newDiv);//append button to list of buttons
-	}
+						newDiv.appendChild(x);
+						list.appendChild(newDiv);//append button to list of buttons
+					}
+  			}
   		}
   		UpBtn.onclick = UploadProcess;// set click reaction for upload button
   		FinBtn.onclick = finishUpload;// set click reaction for finish button
