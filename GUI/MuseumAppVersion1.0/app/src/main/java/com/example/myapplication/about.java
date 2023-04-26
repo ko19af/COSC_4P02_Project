@@ -17,7 +17,7 @@ public class about extends AppCompatActivity {
 
         webView2 = (WebView) findViewById(R.id.webview2);
         webView2.setWebViewClient(new WebViewClient());
-        webView2.loadUrl("https://ko19af.github.io/COSC_4P02_Project/COSC_4P02_Project_Map_Editor/Search.HTML#about");
+        webView2.loadUrl("https://ko19af.github.io/COSC_4P02_Project/COSC_4P02_Project_BackEnd/Search.html#about");
 
         WebSettings webSettings =webView2.getSettings();
         webSettings.setJavaScriptEnabled(true);

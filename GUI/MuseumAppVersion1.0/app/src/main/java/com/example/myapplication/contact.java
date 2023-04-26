@@ -15,7 +15,7 @@ public class contact extends AppCompatActivity {
 
         webView4 = (WebView) findViewById(R.id.webview4);
         webView4.setWebViewClient(new WebViewClient());
-        webView4.loadUrl("https://www.arsenal.com/");
+        webView4.loadUrl("https://ko19af.github.io/COSC_4P02_Project/COSC_4P02_Project_BackEnd/Info.html");
         WebSettings webSettings =webView4.getSettings();
         webSettings.setJavaScriptEnabled(true);
     }

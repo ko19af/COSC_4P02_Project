@@ -16,7 +16,7 @@ public class admin extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
         webViewn = (WebView) findViewById(R.id.webviewn);
         webViewn.setWebViewClient(new WebViewClient());
-        webViewn.loadUrl("https://ko19af.github.io/COSC_4P02_Project/COSC_4P02_Project_Map_Editor/Search.HTML#about");
+        webViewn.loadUrl("https://ko19af.github.io/COSC_4P02_Project/COSC_4P02_Project_BackEnd/Start.html");
 
         WebSettings webSettings =webViewn.getSettings();
         webSettings.setJavaScriptEnabled(true);

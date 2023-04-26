@@ -19,7 +19,7 @@ public class openmap extends AppCompatActivity {
 
         webView = (WebView) findViewById(R.id.webview);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://ko19af.github.io/COSC_4P02_Project/COSC_4P02_Project_Map_Editor/Search.HTML");
+        webView.loadUrl("https://ko19af.github.io/COSC_4P02_Project/COSC_4P02_Project_BackEnd/Search.html");
 
         WebSettings webSettings =webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
