@@ -212,13 +212,13 @@ signOut.addEventListener("click", (e)=>{  // LISTENS TO THE SIGN IN BUTTON
 	e.preventDefault();
 	firebase.auth().signOut()
 	});
-
+/**
 const adminForm = document.querySelector('.admin-actions');
 adminForm.addEventListener('submit',(e) =>{
 	e.preventDefault();
 	const adminEmail = document.querySelector('#admin-email').value;
 
-})
+})**/
 /// ------------------ACTION LISTENERS END ----------------------------------------
 
 
@@ -297,6 +297,7 @@ function login(email, password) {
 		console.log(as)
 
 		if (snapshot.exists()) {
+			//TODO: CHECK IF PASSWORD IS MATCHING
 
 			//if (password === pass) {
 			userRef.once('')
