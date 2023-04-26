@@ -1,25 +1,37 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyDXoy8ml8_5D42UunRfP4mGr5Soi5psjlw",
-    authDomain: "cosc-4p02-interactive-map.firebaseapp.com",
-    databaseURL: "https://cosc-4p02-interactive-map-default-rtdb.firebaseio.com",
-    projectId: "cosc-4p02-interactive-map",
-    storageBucket: "cosc-4p02-interactive-map.appspot.com",
-    messagingSenderId: "1004343153704",
-    appId: "1:1004343153704:web:a011fe90aec519845e511d",
-    measurementId: "G-P0LB44W86S"
-  };
+	apiKey: "AIzaSyDXoy8ml8_5D42UunRfP4mGr5Soi5psjlw",
+	authDomain: "cosc-4p02-interactive-map.firebaseapp.com",
+	databaseURL: "https://cosc-4p02-interactive-map-default-rtdb.firebaseio.com",
+	projectId: "cosc-4p02-interactive-map",
+	storageBucket: "cosc-4p02-interactive-map.appspot.com",
+	messagingSenderId: "1004343153704",
+	appId: "1:1004343153704:web:a011fe90aec519845e511d",
+	measurementId: "G-P0LB44W86S"
+};
+
   
   // initialize firebase
-  firebase.initializeApp(firebaseConfig);
-  
+ firebase.initializeApp(firebaseConfig);
+  const functions = firebase.functions();
   // reference database
   var database = firebase.database();
-  
+
+  var x = getemailFromCookie();
+  console.log("still signed in as : " + x);
   if(document.getElementById("finish")){
   	document.getElementById("finish").addEventListener("click", submitMap);
   }
-  
-  
+function getemailFromCookie() {
+	var allcookies = document.cookie;
+	// Get all the cookies in the array
+	cookiearray = allcookies.split(';');
+	//take key value pair out of this array
+	for(var i=0; i<cookiearray.length; i++) {
+		name = cookiearray[i].split('=')[0];
+		value = cookiearray[i].split('=')[1];
+		return value; // returns email
+	}
+}
   function submitMap(e) {
   	e.preventDefault();
   	var name = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get map name from storage
@@ -179,7 +191,7 @@ function begin(form) {// This function check if a map already exists on the fire
 const registerButton = document.getElementById("registerButton");
 registerButton.addEventListener("click", (e)=>{  // LISTENS TO THE SIGN-UP BUTTON
 	e.preventDefault();
-	const email = document.getElementById("uname").value;
+	const email = document.getElementById("email").value;
 	const password = document.getElementById('pass').value;
 	register(email,password);
 
@@ -189,103 +201,227 @@ registerButton.addEventListener("click", (e)=>{  // LISTENS TO THE SIGN-UP BUTTO
 const loginButton = document.getElementById("loginButton");
 loginButton.addEventListener("click", (e)=>{  // LISTENS TO THE SIGN IN BUTTON
 	e.preventDefault();
-	const email = document.getElementById("uname").value;
+	const email = document.getElementById("email").value;
 	const password = document.getElementById('pass').value;
 	login(email,password);
 
 });
+//--------SIGN OUT BUTTON LISTENER
+const signOut = document.getElementById("signOutButton");
+signOut.addEventListener("click", (e)=>{  // LISTENS TO THE SIGN IN BUTTON
+	e.preventDefault();
+	firebase.auth().signOut()
+	});
 
+const adminForm = document.querySelector('.admin-actions');
+adminForm.addEventListener('submit',(e) =>{
+	e.preventDefault();
+	const adminEmail = document.querySelector('#admin-email').value;
+
+})
 /// ------------------ACTION LISTENERS END ----------------------------------------
-/**
- * Register function is used for creating new users in the database
- * if the email already exists, the user will not be able to create a new account
- * but will be logged in instead.
- * @param email
- * @param password
- */
-function register(email,password){
 
-	var acceptableName = ValidateName(email);
-	var acceptablePass = validate_pass(password);
 
-	if(acceptableName){
-		if(acceptablePass){
-			const auth = firebase.getAuth;
-			firebase.auth().createUserWithEmailAndPassword(email,password)  // Creates a new user with given email/pass. checks if it exists or not first
-				.then(function(){
-					var user = auth.currentUser;
-					var database_ref = database.ref();
-					var user_data = {
-						email : email,
-						password : password,
-						last_login : database.now()
-					};
-					alert("created user?");
-					database_ref.child('users/' +user.uid).set(user_data);
-				}).catch(function(error){
-				//alert(error);
-			})
-		}else {
-			alert("Password must be atleast 6 characters..")
-		}
-	}else {
-		alert("Email does not follow format..")
-	}
+function register(email,password) {
 
-} // register function
+	var ref = firebase.database().ref('users/');
+	ref.once('value').then(function(snapshot) {
+		if(snapshot.exists()) {
+			sessionStorage.setItem("Duplicate", JSON.stringify(true));
+		} else {
+			sessionStorage.setItem("Duplicate", JSON.stringify(false));
+		}});
 
-/**
- * Login function is used when the user submits their login information and clicks
- * the "Sign in" button. This function will check the database for the user credentials and
- * will then sign them in.
- * Login function will then check the now logged in users permissions and
- * display the corresponding webpage.
- * @param email
- * @param password
- */
-function login(email,password){
-	alert("in the login function");
-	firebase.auth().signInWithEmailAndPassword(email, password)
-		.then((userCredential) => {
-			// Signed in
-			const user = userCredential.user;
-			alert("user" + user);
-			alert("you have logged in!");
-			alert("userName = " + userCredential.user.name);
-			//TODO: ADD CREDENTIAL CHECKING
-		})
-		.catch((error) => {
-			const errorCode = error.code;
-			const errorMessage = error.message;
-
-			alert("error code : " + errorCode + "error msg : "+ errorMessage);
-		});
-};//login
-
-/**
- * ValidateName will check if the entered Email is of an acceptable format
- * ie something@email.com. if follows format, returns TRUE, Else returns FALSE.
- * This function is used in the Register function.
- * @param email
- * @returns {boolean}
- * @constructor
- */
-function ValidateName(email){
-	let expression = /^[^@]+@\w+(\.\w+)+\w$/
-	if (expression.test(email) === true) {
-		return true;
+	if(JSON.parse(sessionStorage.getItem("Duplicate"))){
+		alert("Email Already Exists");
+		sessionStorage.clear();
 	}else{
-		return false;
+		sessionStorage.clear();
+		console.log("creating user..")
+		const user = [];//create array for holding museumMap
+		user[0] = {layout: [0], uInfo: [{email:" ", password:" ",adminStatus: "0"}]};// initialize musuem map with info template
+		sessionStorage.setItem("email", JSON.stringify(email));// set what floor we are at in the input stage
+		sessionStorage.setItem("pass", JSON.stringify(password));// set what floor we are at in the input stage
+		sessionStorage.setItem(email, JSON.stringify(user));// initialize hash map to hold map data
+		sessionStorage.setItem("uInfo", JSON.stringify({email: email, adminStatus:'0'}));
+		document.cookie ="email="+email;
+		console.log("signed in as : ")
+		console.log(document.cookie)
 
+		firebase.database().ref('users/' + email).set({
+			email:email,
+			password :password,
+			adminStatus :'0'
+		}).catch((error) =>{
+			console.log(error)
+		})
+
+
+		// window.open('start.html');// open next page
+		// window.close();// close window as it is no longer needed
 	}
 }
 
-/**
- * this function is used to check if the password entered is longer than 6 characters or not
- * used in the Register function
- * @param pass
- * @returns {boolean}
- */
-function validate_pass(pass){
-	return pass >= 6;
+
+function login(email, password) {
+
+	//
+	// var ref = firebase.database().ref('users/');
+	// ref.once('value').then(function(snapshot) {
+	//     if(snapshot.exists()) {
+	//         sessionStorage.setItem("Duplicate", JSON.stringify(true));
+	//         console.log("email " + snapshot.val().email)
+	//         alert("oh")
+	//
+	//     } else {
+	//         sessionStorage.setItem("Duplicate", JSON.stringify(false));
+	//     }}).catch((error) =>{
+	//         alert(error);
+	// });
+	// if(JSON.parse(sessionStorage.getItem("Duplicate"))){
+	//     alert("this worked ");
+	//
+	//     sessionStorage.clear();
+	// }else{
+	//     alert("didnt work")
+	// }
+
+	const userRef = firebase.database().ref('users/' + email)
+	userRef.once('value').then(function (snapshot) {
+		const user = snapshot.val().email;
+		const pass = snapshot.val().password;
+		const as = snapshot.val().adminStatus;
+		// alert(pass+" : " + user);
+		console.log(user);
+		console.log(pass)
+		console.log(as)
+
+		if (snapshot.exists()) {
+
+			//if (password === pass) {
+			userRef.once('')
+			alert("signed in!");
+			document.cookie = "email=" + email;
+			console.log("signed in as : ")
+			console.log(document.cookie)
+			//sessionStorage.clear();
+			//window.close();
+			//window.open('start.html');
+			// else{
+			// alert ('dne');
+			//  }
+		} else {
+			sessionStorage.setItem("Duplicate", JSON.stringify(false));
+			alert("dne");
+		}
+	}).catch((error) =>{
+		//alert("2" + error)
+	});
+
 }
+
+
+
+
+//
+//
+// /**
+//  * Register function is used for creating new users in the database
+//  * if the email already exists, the user will not be able to create a new account
+//  * but will be logged in instead.
+//  * @param email
+//  * @param password
+//  */
+// function register(email,password){
+//
+// 	var acceptableName = ValidateName(email);
+// 	var acceptablePass = validate_pass(password);
+//
+// 	if(acceptableName){
+// 		if(acceptablePass){
+// 			const auth = firebase.getAuth;
+// 			firebase.auth().createUserWithEmailAndPassword(email,password)  // Creates a new user with given email/pass. checks if it exists or not first
+// 				.then(function(){
+// 					var user = auth.currentUser;
+// 					var database_ref = database.ref();
+// 					var user_data = {
+// 						email : email,
+// 						password : password,
+// 						last_login : database.now()
+// 					};
+// 					alert("created user?");
+// 					database_ref.child('users/' +user.uid).set(user_data);
+// 				}).catch(function(error){
+// 				//alert(error);
+// 			})
+// 		}else {
+// 			alert("Password must be atleast 6 characters..")
+// 		}
+// 	}else {
+// 		alert("Email does not follow format..")
+// 	}
+//
+// } // register function
+//
+// /**
+//  * Login function is used when the user submits their login information and clicks
+//  * the "Sign in" button. This function will check the database for the user credentials and
+//  * will then sign them in.
+//  * Login function will then check the now logged in users permissions and
+//  * display the corresponding webpage.
+//  * @param email
+//  * @param password
+//  */
+// function login(email,password){
+// 	alert("in the login function");
+// 	firebase.auth().signInWithEmailAndPassword(email, password)
+// 		.then((userCredential) => {
+// 			// Signed in
+// 			const user = userCredential.user;
+// 			alert("user" + user);
+// 			alert("you have logged in!");
+// 			alert("userName = " + userCredential.user.name);
+// 			//TODO: ADD CREDENTIAL CHECKING
+// 			getAuthStatus();
+// 		})
+// 		.catch((error) => {
+// 			const errorCode = error.code;
+// 			const errorMessage = error.message;
+//
+// 			alert("error code : " + errorCode + "error msg : "+ errorMessage);
+// 		});
+// };//login
+//
+// /**
+//  * ValidateName will check if the entered Email is of an acceptable format
+//  * ie something@email.com. if follows format, returns TRUE, Else returns FALSE.
+//  * This function is used in the Register function.
+//  * @param email
+//  * @returns {boolean}
+//  * @constructor
+//  */
+// function ValidateName(email){
+// 	let expression = /^[^@]+@\w+(\.\w+)+\w$/
+// 	if (expression.test(email) === true) {
+// 		return true;
+// 	}else{
+// 		return false;
+//
+// 	}
+// }
+//
+// /**
+//  * this function is used to check if the password entered is longer than 6 characters or not
+//  * used in the Register function
+//  * @param pass
+//  * @returns {boolean}
+//  */
+// function validate_pass(pass){
+// 	return pass >= 6;
+// }
+//
+//
+// // listen for auth changes
+// firebase.auth().onAuthStateChanged(user =>{
+// 	console.log(user);
+// })
