@@ -129,13 +129,11 @@ document.getElementById("floorPrompt").innerHTML = "Input Layout For Floor: " + 
   	}else map[position] = insert;
   	drawMap();
   };
-  
-  const isMobile = navigator.userAgentData.mobile;
 
   window.addEventListener("resize", resize, {passive:true});
   context.canvas.addEventListener("mousemove", controller.move);
   context.canvas.addEventListener("touchmove", controller.move, {passive:true});
-  context.canvas.addEventListener("touchstart", changeColor);
+  context.canvas.addEventListener("touchstart", controller.move, {passive:true});
   context.canvas.addEventListener("click", changeColor);
   resize();
 
@@ -153,13 +151,12 @@ function submitFloor(){// submit floor plan to next stage of process
 	let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get museum name
 	let museumMap = JSON.parse(sessionStorage.getItem(museName));// get museum map
 	
-	museumMap[fNum] = {layout: map, fInfo: [{eName:" ", location:" ",eEd: " ", floorNum: " ",eInfo: " ", tile: 0},], images: [],};// initialize musuem map with info template// store floor info into museum map
+	museumMap[fNum] = {layout: map, fInfo: [{eName:" ", location:" ",eEd: " ", floorNum: " ",eInfo: " ", tile: 0},], images: [""],};// initialize musuem map with info template// store floor info into museum map
 	sessionStorage.setItem(museName, JSON.stringify(museumMap));// set museum map into storage
 
 	sessionStorage.setItem("floorLayout", JSON.stringify(map));// store floor layout info
-	window.location = 'floorInfo.html'; // open floor information loader page
-	//window.open('floorInfo.html');
-	//window.close();// close current page
+	window.open('floorInfo.html');// open floor information loader page
+	window.close();// close current page
 }
 
 function changeTile(pic) {
