@@ -297,6 +297,7 @@ function login(email, password) {
 		console.log(as)
 
 		if (snapshot.exists()) {
+			//TODO: CHECK IF PASSWORD IS MATCHING
 
 			//if (password === pass) {
 			userRef.once('')
