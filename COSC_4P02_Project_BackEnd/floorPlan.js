@@ -135,13 +135,8 @@ document.getElementById("floorPrompt").innerHTML = "Input Layout For Floor: " + 
   window.addEventListener("resize", resize, {passive:true});
   context.canvas.addEventListener("mousemove", controller.move);
   context.canvas.addEventListener("touchmove", controller.move, {passive:true});
-  context.canvas.addEventListener("touchstart", controller.move, {passive:true});
-  if (isMobile) {
-	$(this).off('click');
-    context.canvas.addEventListener("touchend", changeColor);
-  } else {
-    context.canvas.addEventListener("click", changeColor);
-  }
+  context.canvas.addEventListener("touchstart", changeColor);
+  context.canvas.addEventListener("click", changeColor);
   resize();
 
   window.requestAnimationFrame(loop);
