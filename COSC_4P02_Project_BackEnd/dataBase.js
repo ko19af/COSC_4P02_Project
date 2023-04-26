@@ -21,17 +21,7 @@ const firebaseConfig = {
   if(document.getElementById("finish")){
   	document.getElementById("finish").addEventListener("click", submitMap);
   }
-function getemailFromCookie() {
-	var allcookies = document.cookie;
-	// Get all the cookies in the array
-	cookiearray = allcookies.split(';');
-	//take key value pair out of this array
-	for(var i=0; i<cookiearray.length; i++) {
-		name = cookiearray[i].split('=')[0];
-		value = cookiearray[i].split('=')[1];
-		return value; // returns email
-	}
-}
+
   function submitMap(e) {
   	e.preventDefault();
   	var name = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get map name from storage
@@ -210,7 +200,7 @@ loginButton.addEventListener("click", (e)=>{  // LISTENS TO THE SIGN IN BUTTON
 const signOut = document.getElementById("signOutButton");
 signOut.addEventListener("click", (e)=>{  // LISTENS TO THE SIGN IN BUTTON
 	e.preventDefault();
-	firebase.auth().signOut()
+	logout();
 	});
 /**
 const adminForm = document.querySelector('.admin-actions');
@@ -291,17 +281,16 @@ function login(email, password) {
 		const user = snapshot.val().email;
 		const pass = snapshot.val().password;
 		const as = snapshot.val().adminStatus;
-		// alert(pass+" : " + user);
-		console.log(user);
-		console.log(pass)
-		console.log(as)
+		//TODO: REMOVE THESE LOGS
+		console.log("Email :" +user);
+		console.log("Pass : " +pass)
+		console.log("adminStatus :" + as)
 
 		if (snapshot.exists()) {
 			//TODO: CHECK IF PASSWORD IS MATCHING
 
 			//if (password === pass) {
 			userRef.once('')
-			alert("signed in!");
 			document.cookie = "email=" + email;
 			console.log("signed in as : ")
 			console.log(document.cookie)
@@ -319,11 +308,31 @@ function login(email, password) {
 		//alert("2" + error)
 	});
 
+
+
 }
 
+function logout(){
+	var x = getemailFromCookie();
+	document.cookie = "email="+'';
+	console.log("user :" + x + " is logged out ")
 
+	var t = getemailFromCookie()
+	console.log(t);
 
+}
 
+function getemailFromCookie() {
+	var allcookies = document.cookie;
+	// Get all the cookies in the array
+	cookiearray = allcookies.split(';');
+	//take key value pair out of this array
+	for(var i=0; i<cookiearray.length; i++) {
+		name = cookiearray[i].split('=')[0];
+		value = cookiearray[i].split('=')[1];
+		return value; // returns email
+	}
+}
 //
 //
 // /**
