@@ -18,7 +18,7 @@ const firebaseConfig = {
 
   const cookie_Email = getemailFromCookie();
   const curr_adminStatus = checkAdminStatus();
-	logout();
+	//logout();
 
   if(document.getElementById("finish")){
   	document.getElementById("finish").addEventListener("click", submitMap);
@@ -206,11 +206,18 @@ signOut.addEventListener("click", (e)=>{  // LISTENS TO THE SIGN IN BUTTON
 	location.reload();
 	});
 
-const adminForm = document.querySelector('.admin-actions');
+const adminForm = document.getElementById("add_admin")
 adminForm.addEventListener('submit',(e) =>{
 	e.preventDefault();
 	const adminEmail = document.getElementById('admin-email').value;
 	setAdminStatus(adminEmail)
+
+})
+const adminFormREMOVE = document.getElementById("rem_admin")
+adminFormREMOVE.addEventListener('submit',(e) =>{
+	e.preventDefault();
+	const adminEmail = document.getElementById('admin-email').value;
+	removeAdminStatus(adminEmail)
 
 })
 /// ------------------ACTION LISTENERS END ----------------------------------------
