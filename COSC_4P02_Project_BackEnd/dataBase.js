@@ -152,23 +152,24 @@ const firebaseConfig = {
   
 function begin(form) {// This function check if a map already exists on the firebase storage
 	
-	if(form.floors.value < 6) {
-		firebase.database().ref("Map/"+form.mName.value).once("value").then(function(snapshot){
-   	if(snapshot.exists()) {
-    		alert("Museum Already Exists");
-    		sessionStorage.clear();
-  		}else {
-  			sessionStorage.clear();
-         const museumMap = [];//create array for holding museumMap
-         museumMap[0] = {layout: [0], fInfo: [{eName:" ", location:" ",eEd: " ", floorNum: " ",eInfo: " ", tile: 0},], images: [""],};// initialize musuem map with info template
-         sessionStorage.setItem("rFloors", JSON.stringify(form.floors.value));// set what floor we are at in the input stage
-         sessionStorage.setItem(form.mName.value, JSON.stringify(museumMap));// initialize hash map to hold map data
-         sessionStorage.setItem("mInfo", JSON.stringify({mName: form.mName.value, numFloors: form.floors.value,}));
-         window.open('floorPlan.html');// open next page
-         window.close();// close window as it is no longer needed
+	if(form.mName.value=="" || form.floors.value=="") alert("Required field is blank")// if required field is blank
+	else if(form.floors.value < 6) {// if floor limit is not exceeded
+		firebase.database().ref("Map/"+form.mName.value).once("value").then(function(snapshot){// check if museum already exisits
+   	if(snapshot.exists()) {// if museum exists
+    		alert("Museum Already Exists");// alert user of the issue
+    		sessionStorage.clear();// clear session storage
+  	}else {// if museum does not already exists
+  		sessionStorage.clear();
+	        const museumMap = [];//create array for holding museumMap
+        	museumMap[0] = {layout: [0], fInfo: [{eName:" ", location:" ",eEd: " ", floorNum: " ",eInfo: " ", tile: 0},], images: [""],};// initialize musuem map with info template
+         	sessionStorage.setItem("rFloors", JSON.stringify(form.floors.value));// set what floor we are at in the input stage
+         	sessionStorage.setItem(form.mName.value, JSON.stringify(museumMap));// initialize hash map to hold map data
+         	sessionStorage.setItem("mInfo", JSON.stringify({mName: form.mName.value, numFloors: form.floors.value,}));// set map data in session storage
+                window.open('floorPlan.html');// open next page
+                window.close();// close window as it is no longer needed
   			}});
-   }else {
-   	alert("Floor limit exceeded");
+   }else {// if floor limit is exceeded
+   	alert("Floor limit exceeded");// alert user limit is exceeded
    }
    event.preventDefault();
 };
