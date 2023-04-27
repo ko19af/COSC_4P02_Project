@@ -1,0 +1,144 @@
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent" android:layout_height="wrap_content" >
+	<!-- 
+	/*
+	 *	This content is generated from the API File Info.
+	 *	(Alt+Shift+Ctrl+I).
+	 *
+	 *	@desc 		
+	 *	@file 		iphone_14_pro___1
+	 *	@date 		Tuesday 14th of March 2023 01:11:20 AM
+	 *	@title 		Page 1
+	 *	@author 	
+	 *	@keywords 	
+	 *	@generator 	Export Kit v1.3.figma
+	 *
+	 */
+	-->
+	<ScrollView android:id="@+id/iphone_14_pro___1" 
+		android:layout_width="wrap_content" 
+		android:layout_height="match_parent" >
+
+		<RelativeLayout android:id="@+id/content_container" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" >
+
+			<View   android:id="@+id/_bg__iphone_14_pro___1"
+				android:background="@drawable/_bg__iphone_14_pro___1_shape"
+				 android:layout_marginStart="0dp"
+				android:layout_marginTop="0dp"
+				android:layout_width="393dp"
+				android:layout_height="852dp" />
+
+			<ImageView android:id="@+id/contact_"
+				android:src="@drawable/contact_"
+				android:contentDescription="contact_"
+				 android:layout_marginStart="96dp"
+				android:layout_marginTop="775dp"
+				android:layout_width="202dp"
+				android:layout_height="61dp" />
+
+			<ImageView android:id="@+id/background_pic__map_"
+				android:src="@drawable/background_pic__map_"
+				android:contentDescription="background_pic__map_"
+				 android:layout_marginStart="-4dp"
+				android:layout_marginTop="-3dp"
+				android:layout_width="401dp"
+				android:layout_height="925dp" />
+
+			<ImageView android:id="@+id/search_bar"
+				android:src="@drawable/search_bar"
+				android:contentDescription="search_bar"
+				 android:layout_marginStart="0dp"
+				android:layout_marginTop="120.5dp"
+				android:layout_width="393dp"
+				android:layout_height="81dp" />
+
+			<ImageView android:id="@+id/search_icon"
+				android:src="@drawable/search_icon"
+				android:contentDescription="search_icon"
+				 android:layout_marginStart="10dp"
+				android:layout_marginTop="149dp"
+				android:layout_width="25dp"
+				android:layout_height="28dp" />
+
+			<ImageView android:id="@+id/top_right_nav"
+				android:src="@drawable/top_right_nav"
+				android:contentDescription="top_right_nav"
+				 android:layout_marginStart="342dp"
+				android:layout_marginTop="0dp"
+				android:layout_width="51dp"
+				android:layout_height="46dp" />
+
+			<ImageView android:id="@+id/top_left_logo"
+				android:src="@drawable/top_left_logo"
+				android:contentDescription="top_left_logo"
+				 android:layout_marginStart="0dp"
+				android:layout_marginTop="7dp"
+				android:layout_width="135dp"
+				android:layout_height="46dp" />
+
+			<View   android:id="@+id/rectangle_4"
+				android:background="@drawable/rectangle_4_shape"
+				 android:layout_marginStart="0dp"
+				android:layout_marginTop="200dp"
+				android:layout_width="393dp"
+				android:layout_height="291dp" />
+
+			<TextView android:id="@+id/niagara_falls_history_museum"
+				android:fontFamily="Inter"
+				android:textStyle="italic"
+				android:textSize="18sp"
+				android:textColor="@color/niagara_falls_history_museum_color"
+				android:layout_marginLeft="44dp"
+				android:layout_marginTop="149dp"
+				android:layout_width="328dp"
+				android:layout_height="45dp"
+				android:text="@string/niagara_falls_history_museum_string"
+				 />
+
+			<ImageView android:id="@+id/image_1"
+				android:src="@drawable/image_1"
+				android:contentDescription="image_1"
+				 android:layout_marginStart="352dp"
+				android:layout_marginTop="146dp"
+				android:layout_width="32dp"
+				android:layout_height="31dp" />
+
+			<TextView android:id="@+id/places_and_addresses_5810_ferry_st__niagara_falls__on_l2g_1s9"
+				android:fontFamily="Noto Sans JP"
+				android:textSize="13sp"
+				android:textColor="@color/niagara_falls_history_museum_color"
+				android:layout_marginLeft="0dp"
+				android:layout_marginTop="211dp"
+				android:layout_width="411.5dp"
+				android:layout_height="62.5dp"
+				android:text="@string/places_and_addresses_5810_ferry_st__niagara_falls__on_l2g_1s9_string"
+				 />
+
+			<ImageView android:id="@+id/image_2"
+				android:src="@drawable/image_2"
+				android:contentDescription="image_2"
+				 android:layout_marginStart="10dp"
+				android:layout_marginTop="252dp"
+				android:layout_width="13dp"
+				android:layout_height="24dp" />
+
+			<View   android:id="@+id/rectangle_3"
+				android:background="@drawable/rectangle_3_shape"
+				 android:layout_marginStart="347dp"
+				android:layout_marginTop="534dp"
+				android:layout_width="100dp"
+				android:layout_height="100dp" />
+
+			<View   android:id="@+id/rectangle_5"
+				android:background="@drawable/rectangle_5_shape"
+				 android:layout_marginStart="-48dp"
+				android:layout_marginTop="646dp"
+				android:layout_width="100dp"
+				android:layout_height="100dp" />
+
+		</RelativeLayout>
+
+	</ScrollView>
+</HorizontalScrollView>
