@@ -153,6 +153,7 @@ const firebaseConfig = {
 function begin(form) {// This function check if a map already exists on the firebase storage
 	
 	if(form.mName.value=="" || form.floors.value=="") alert("Required field is blank")// if required field is blank
+	else if(form.floors.value < 1) alert("Floor limit not meet");// if floor limit is not meet
 	else if(form.floors.value < 6) {// if floor limit is not exceeded
 		firebase.database().ref("Map/"+form.mName.value).once("value").then(function(snapshot){// check if museum already exisits
    	if(snapshot.exists()) {// if museum exists
