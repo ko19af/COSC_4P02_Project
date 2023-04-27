@@ -16,8 +16,10 @@ const firebaseConfig = {
   // reference database
   var database = firebase.database();
 
-  var x = getemailFromCookie();
-  console.log("still signed in as : " + x);
+  const cookie_Email = getemailFromCookie();
+  const curr_adminStatus = checkAdminStatus();
+
+
   if(document.getElementById("finish")){
   	document.getElementById("finish").addEventListener("click", submitMap);
   }
@@ -209,108 +211,117 @@ adminForm.addEventListener('submit',(e) =>{
 })**/
 /// ------------------ACTION LISTENERS END ----------------------------------------
 
+function setAdminStatus(user) {
+	firebase.database().ref('users/' + user + "/adminStatus").set('1').catch((error) => {
+		console.log(error)
+	})
+}
 
+function removeAdminStatus(user) {
+	firebase.database().ref('users/' + user + "/adminStatus").set('0').catch((error) => {
+		console.log(error)
+	})
+}
+
+
+function checkAdminStatus(){
+	var curr_user = getemailFromCookie()
+	var ref = firebase.database().ref('users/'+curr_user);
+	ref.once('value').then(function (snapshot) {
+		console.log("admin Status " + snapshot.val().adminStatus)
+			return snapshot.val().adminStatus;
+
+	});
+}
 function register(email,password) {
 
-	var ref = firebase.database().ref('users/');
-	ref.once('value').then(function(snapshot) {
-		if(snapshot.exists()) {
-			sessionStorage.setItem("Duplicate", JSON.stringify(true));
+		var ref = firebase.database().ref('users/');
+		ref.once('value').then(function (snapshot) {
+			if (snapshot.exists()) {
+				sessionStorage.setItem("Duplicate", JSON.stringify(true));
+			} else {
+				sessionStorage.setItem("Duplicate", JSON.stringify(false));
+			}
+		});
+
+		if (JSON.parse(sessionStorage.getItem("Duplicate"))) {
+			alert("Email Already Exists");
+			sessionStorage.clear();
 		} else {
-			sessionStorage.setItem("Duplicate", JSON.stringify(false));
-		}});
+			sessionStorage.clear();
+			console.log("creating user..")
+			const user = [];//create array for holding museumMap
+			user[0] = {layout: [0], uInfo: [{email: " ", password: " ", adminStatus: "0"}]};// initialize musuem map with info template
+			sessionStorage.setItem("email", JSON.stringify(email));// set what floor we are at in the input stage
+			sessionStorage.setItem("pass", JSON.stringify(password));// set what floor we are at in the input stage
+			sessionStorage.setItem(email, JSON.stringify(user));// initialize hash map to hold map data
+			sessionStorage.setItem("uInfo", JSON.stringify({email: email, adminStatus: '0'}));
+			document.cookie = "email=" + email;
+			console.log("signed in as : ")
+			console.log(document.cookie)
 
-	if(JSON.parse(sessionStorage.getItem("Duplicate"))){
-		alert("Email Already Exists");
-		sessionStorage.clear();
-	}else{
-		sessionStorage.clear();
-		console.log("creating user..")
-		const user = [];//create array for holding museumMap
-		user[0] = {layout: [0], uInfo: [{email:" ", password:" ",adminStatus: "0"}]};// initialize musuem map with info template
-		sessionStorage.setItem("email", JSON.stringify(email));// set what floor we are at in the input stage
-		sessionStorage.setItem("pass", JSON.stringify(password));// set what floor we are at in the input stage
-		sessionStorage.setItem(email, JSON.stringify(user));// initialize hash map to hold map data
-		sessionStorage.setItem("uInfo", JSON.stringify({email: email, adminStatus:'0'}));
-		document.cookie ="email="+email;
-		console.log("signed in as : ")
-		console.log(document.cookie)
-
-		firebase.database().ref('users/' + email).set({
-			email:email,
-			password :password,
-			adminStatus :'0'
-		}).catch((error) =>{
-			console.log(error)
-		})
+			firebase.database().ref('users/'+email).set({
+				email: email,
+				password: password,
+				adminStatus: '0'
+			}).catch((error) => {
+				console.log(error)
+			})
 
 
-		// window.open('start.html');// open next page
-		// window.close();// close window as it is no longer needed
-	}
+			// window.open('start.html');// open next page
+			// window.close();// close window as it is no longer needed
+		}
+
 }
 
 
 function login(email, password) {
 
-	//
-	// var ref = firebase.database().ref('users/');
-	// ref.once('value').then(function(snapshot) {
-	//     if(snapshot.exists()) {
-	//         sessionStorage.setItem("Duplicate", JSON.stringify(true));
-	//         console.log("email " + snapshot.val().email)
-	//         alert("oh")
-	//
-	//     } else {
-	//         sessionStorage.setItem("Duplicate", JSON.stringify(false));
-	//     }}).catch((error) =>{
-	//         alert(error);
-	// });
-	// if(JSON.parse(sessionStorage.getItem("Duplicate"))){
-	//     alert("this worked ");
-	//
-	//     sessionStorage.clear();
-	// }else{
-	//     alert("didnt work")
-	// }
 
-	const userRef = firebase.database().ref('users/' + email)
-	userRef.once('value').then(function (snapshot) {
-		const user = snapshot.val().email;
-		const pass = snapshot.val().password;
-		const as = snapshot.val().adminStatus;
-		//TODO: REMOVE THESE LOGS
-		console.log("Email :" +user);
-		console.log("Pass : " +pass)
-		console.log("adminStatus :" + as)
+			const userRef = firebase.database().ref('users/' + email)
+			userRef.once('value').then(function (snapshot) {
+				const user = snapshot.val().email;
+				const pass = snapshot.val().password;
+				const as = snapshot.val().adminStatus;
+				//TODO: REMOVE THESE LOGS
+				console.log("Email :" + user);
+				console.log("Pass : " + pass)
+				console.log("adminStatus :" + as)
 
-		if (snapshot.exists()) {
-			//TODO: CHECK IF PASSWORD IS MATCHING
+				if (snapshot.exists()) {
+					//TODO: CHECK IF PASSWORD IS MATCHING
+					if (compareString(password, pass) === 0) {
+						console.log("correct pass")
+						userRef.once('')
+						document.cookie = "email=" + email;
+						console.log("signed in as : ")
+						console.log(document.cookie)
 
-			//if (password === pass) {
-			userRef.once('')
-			document.cookie = "email=" + email;
-			console.log("signed in as : ")
-			console.log(document.cookie)
-			//sessionStorage.clear();
-			//window.close();
-			//window.open('start.html');
-			// else{
-			// alert ('dne');
-			//  }
-		} else {
-			sessionStorage.setItem("Duplicate", JSON.stringify(false));
-			alert("dne");
-		}
-	}).catch((error) =>{
-		//alert("2" + error)
-	});
+					} else {
+						// password or email incorrect
+						console.log("wrong pass")
+					}
+				} else {
+					sessionStorage.setItem("Duplicate", JSON.stringify(false));
+					alert("dne");
+				}
+			}).catch((error) => {
+				//alert("2" + error)
+			});
 
 
 
 }
 
+
+function compareString(inputPass,StoredPass){
+	var result = inputPass.localeCompare(StoredPass)
+	console.log(result);
+	return result
+}
 function logout(){
+
 	var x = getemailFromCookie();
 	document.cookie = "email="+'';
 	console.log("user :" + x + " is logged out ")
