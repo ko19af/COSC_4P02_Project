@@ -1,0 +1,151 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.myapplication"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="19"
+8-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:5:5-67
+11-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:5:22-64
+12    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+12-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:6:5-79
+12-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:6:22-76
+13
+14    <permission
+14-->[androidx.core:core:1.9.0] C:\Users\Connor\.gradle\caches\transforms-3\48da4d468f697fb0fb5d56e4c7c822b9\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
+15        android:name="com.example.myapplication.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+15-->[androidx.core:core:1.9.0] C:\Users\Connor\.gradle\caches\transforms-3\48da4d468f697fb0fb5d56e4c7c822b9\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
+16        android:protectionLevel="signature" />
+16-->[androidx.core:core:1.9.0] C:\Users\Connor\.gradle\caches\transforms-3\48da4d468f697fb0fb5d56e4c7c822b9\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
+17
+18    <uses-permission android:name="com.example.myapplication.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+18-->[androidx.core:core:1.9.0] C:\Users\Connor\.gradle\caches\transforms-3\48da4d468f697fb0fb5d56e4c7c822b9\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
+18-->[androidx.core:core:1.9.0] C:\Users\Connor\.gradle\caches\transforms-3\48da4d468f697fb0fb5d56e4c7c822b9\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
+19
+20    <application
+20-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:8:5-49:19
+21        android:allowBackup="true"
+21-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:9:9-35
+22        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+22-->[androidx.core:core:1.9.0] C:\Users\Connor\.gradle\caches\transforms-3\48da4d468f697fb0fb5d56e4c7c822b9\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
+23        android:dataExtractionRules="@xml/data_extraction_rules"
+23-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:10:9-65
+24        android:debuggable="true"
+25        android:fullBackupContent="@xml/backup_rules"
+25-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:11:9-54
+26        android:icon="@mipmap/ic_launcher"
+26-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:12:9-43
+27        android:label="@string/app_name"
+27-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:13:9-41
+28        android:supportsRtl="true"
+28-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:14:9-35
+29        android:testOnly="true"
+30        android:theme="@style/Theme.MyApplication" >
+30-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:15:9-51
+31        <activity
+31-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:17:9-20:40
+32            android:name="com.example.myapplication.rate"
+32-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:18:13-33
+33            android:exported="false"
+33-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:20:13-37
+34            android:screenOrientation="portrait" />
+34-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:19:13-49
+35        <activity
+35-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:21:9-24:40
+36            android:name="com.example.myapplication.admin"
+36-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:22:13-34
+37            android:exported="false"
+37-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:24:13-37
+38            android:screenOrientation="landscape" />
+38-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:23:13-50
+39        <activity
+39-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:25:9-30:70
+40            android:name="com.example.myapplication.contact"
+40-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:26:13-36
+41            android:exported="false"
+41-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:27:13-37
+42            android:label="@string/title_activity_contact"
+42-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:28:13-59
+43            android:screenOrientation="landscape"
+43-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:29:13-50
+44            android:theme="@style/Theme.MyApplication.NoActionBar" />
+44-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:30:13-67
+45        <activity
+45-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:31:9-34:40
+46            android:name="com.example.myapplication.about"
+46-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:32:13-34
+47            android:exported="false"
+47-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:34:13-37
+48            android:screenOrientation="landscape" />
+48-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:33:13-50
+49        <activity
+49-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:35:9-38:40
+50            android:name="com.example.myapplication.openmap"
+50-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:36:13-36
+51            android:exported="false"
+51-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:38:13-37
+52            android:screenOrientation="landscape" />
+52-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:37:13-50
+53        <activity
+53-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:39:9-48:20
+54            android:name="com.example.myapplication.MainActivity"
+54-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:40:13-41
+55            android:exported="true"
+55-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:42:13-36
+56            android:screenOrientation="portrait" >
+56-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:41:13-49
+57            <intent-filter>
+57-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:43:13-47:29
+58                <action android:name="android.intent.action.MAIN" />
+58-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:44:17-69
+58-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:44:25-66
+59
+60                <category android:name="android.intent.category.LAUNCHER" />
+60-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:46:17-77
+60-->C:\Users\Connor\AndroidStudioProjects\MuseumAppVersion1.0\app\src\main\AndroidManifest.xml:46:27-74
+61            </intent-filter>
+62        </activity>
+63
+64        <provider
+64-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Connor\.gradle\caches\transforms-3\b534eca45ae0368be30899d5007a440e\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+65            android:name="androidx.startup.InitializationProvider"
+65-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Connor\.gradle\caches\transforms-3\b534eca45ae0368be30899d5007a440e\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+66            android:authorities="com.example.myapplication.androidx-startup"
+66-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Connor\.gradle\caches\transforms-3\b534eca45ae0368be30899d5007a440e\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+67            android:exported="false" >
+67-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Connor\.gradle\caches\transforms-3\b534eca45ae0368be30899d5007a440e\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+68            <meta-data
+68-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Connor\.gradle\caches\transforms-3\b534eca45ae0368be30899d5007a440e\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+69                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+69-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Connor\.gradle\caches\transforms-3\b534eca45ae0368be30899d5007a440e\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+70                android:value="androidx.startup" />
+70-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Connor\.gradle\caches\transforms-3\b534eca45ae0368be30899d5007a440e\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+71            <meta-data
+71-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Connor\.gradle\caches\transforms-3\b0761d22b5c86c7f873b7a426ffce717\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+72                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+72-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Connor\.gradle\caches\transforms-3\b0761d22b5c86c7f873b7a426ffce717\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+73                android:value="androidx.startup" />
+73-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Connor\.gradle\caches\transforms-3\b0761d22b5c86c7f873b7a426ffce717\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+74        </provider>
+75
+76        <uses-library
+76-->[androidx.window:window:1.0.0] C:\Users\Connor\.gradle\caches\transforms-3\366f50b211bd670aa2f01a4a938cfc95\transformed\window-1.0.0\AndroidManifest.xml:25:9-27:40
+77            android:name="androidx.window.extensions"
+77-->[androidx.window:window:1.0.0] C:\Users\Connor\.gradle\caches\transforms-3\366f50b211bd670aa2f01a4a938cfc95\transformed\window-1.0.0\AndroidManifest.xml:26:13-54
+78            android:required="false" />
+78-->[androidx.window:window:1.0.0] C:\Users\Connor\.gradle\caches\transforms-3\366f50b211bd670aa2f01a4a938cfc95\transformed\window-1.0.0\AndroidManifest.xml:27:13-37
+79        <uses-library
+79-->[androidx.window:window:1.0.0] C:\Users\Connor\.gradle\caches\transforms-3\366f50b211bd670aa2f01a4a938cfc95\transformed\window-1.0.0\AndroidManifest.xml:28:9-30:40
+80            android:name="androidx.window.sidecar"
+80-->[androidx.window:window:1.0.0] C:\Users\Connor\.gradle\caches\transforms-3\366f50b211bd670aa2f01a4a938cfc95\transformed\window-1.0.0\AndroidManifest.xml:29:13-51
+81            android:required="false" />
+81-->[androidx.window:window:1.0.0] C:\Users\Connor\.gradle\caches\transforms-3\366f50b211bd670aa2f01a4a938cfc95\transformed\window-1.0.0\AndroidManifest.xml:30:13-37
+82    </application>
+83
+84</manifest>

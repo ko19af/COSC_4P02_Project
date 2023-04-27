@@ -159,7 +159,7 @@ var map, tile_x, tile_y;// make map and tile_x variables global
   console.log("input:",value);
   console.log("tile: ",layout.map[tile]);
   // Check if the selected tile's current value is set to 0
-  if (layout.map[tile] != 0 ) {
+ /* if (layout.map[tile] != 0 ) {
     // Update the map with the new value for the selected tile element
     layout.map[tile] = value;
 
@@ -172,7 +172,33 @@ var map, tile_x, tile_y;// make map and tile_x variables global
 
   } else {
     alert("The selected tile's current value is 0.");
-  }
+  }*/
+  if(map[position] == 0) {// if selected a wall tile
+  		alert("invalid position to add info");// tell user can't write there
+  	}else if(map[position] == 8) {// if selected an already choosen floor tile
+  		grouping.removeAt(position);
+  		
+  	 	if(sessionStorage.getItem("modify")) {// if modifying map
+       let mFloor = JSON.parse(sessionStorage.getItem("modify"));// get floor being modified
+       let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get museum name
+       let restore = JSON.parse(sessionStorage.getItem(museName))[mFloor].layout;// set map to layout being edited;// get museum info
+       map[position] = restore[position];// restore original tile
+    	} else {
+       let restore = JSON.parse(sessionStorage.getItem("floorLayout"))// get floor layout from session storage
+       map[position] = restore[position];// restore original tile
+    	}
+  	}else {// if selected floor tile
+  		eInfo.tile = position;
+  		if(grouping.head == null) {
+  			grouping.insertFirst(eInfo);
+  		}else {
+  			grouping.insertAt(eInfo, position);
+  		}
+  		grouping.printListData();
+  		map[position] = 8;
+  	}
+  	
+  	sessionStorage.setItem("group", JSON.stringify(grouping));// make accessible to other pages
   display.render();
 }
 

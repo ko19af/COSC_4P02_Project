@@ -73,11 +73,10 @@ var tile_x;// make tile_x variables global
 
 (function() {
 
-  var buffer, context, controller, drawMap, loop, output, size, tile_y, value;
+  var buffer, context, controller, drawMap, loop, size, tile_y, value;
   
   buffer = document.createElement("canvas").getContext("2d");
   context = document.querySelector("canvas").getContext("2d");
-  output = document.querySelector("p");
 
   size = 32;
 
@@ -142,7 +141,6 @@ var tile_x;// make tile_x variables global
     buffer.fillStyle = "rgba(128, 128, 128, 0.5)";
     buffer.fillRect(tile_x * size, tile_y * size, size, size);
     context.drawImage(buffer.canvas, 0, 0, buffer.canvas.width, buffer.canvas.height, 0, 0, context.canvas.width, context.canvas.height);
-    output.innerHTML = "tile_x: " + tile_x + "<br>tile_y: " + tile_y + "<br>value: " + value;
     window.requestAnimationFrame(loop);
   };
 
@@ -169,8 +167,16 @@ var tile_x;// make tile_x variables global
   		alert("invalid position to add info");// tell user can't write there
   	}else if(map[position] == 8) {// if selected an already choosen floor tile
   		grouping.removeAt(position);
-  		restore = JSON.parse(sessionStorage.getItem("floorLayout"))// get floor layout from session storage
-  		map[position] = restore[position];// restore original tile
+  		
+  	 	if(sessionStorage.getItem("modify")) {// if modifying map
+       let mFloor = JSON.parse(sessionStorage.getItem("modify"));// get floor being modified
+       let museName = JSON.parse(sessionStorage.getItem("mInfo")).mName;// get museum name
+       let restore = JSON.parse(sessionStorage.getItem(museName))[mFloor].layout;// set map to layout being edited;// get museum info
+       map[position] = restore[position];// restore original tile
+    	} else {
+       let restore = JSON.parse(sessionStorage.getItem("floorLayout"))// get floor layout from session storage
+       map[position] = restore[position];// restore original tile
+    	}
   	}else {// if selected floor tile
   		eInfo.tile = position;// store tile that is being grouped
   		if(grouping.head == null) {// if grouping is empty
@@ -198,16 +204,14 @@ var tile_x;// make tile_x variables global
 })();
 
 function finishFloor() {
-	window.location = 'Image.html'; // open Image uploader
-	//window.open('Image.html');// open Image uploader
-	//window.close();// close editing window
+	window.open('Image.html');// open Image uploader
+	window.close();// close editing window
 }
 
 function inputInfo(){
 	if(grouping.head == null) alert("Please chose tiles to upload information")
 	else {
-		window.location = 'infoInput.html';
-		//window.open('infoInput.html');
-		//window.close();
+		window.open('infoInput.html');
+		window.close();
 	}
 }
