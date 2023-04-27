@@ -160,29 +160,24 @@ function getemailFromCookie() {
 function begin(form) {// This function check if a map already exists on the firebase storage
 	
 	if(form.floors.value < 6) {
-		firebase.database().ref('Map/' + form.mName.value).once('value').then(function(snapshot) {
+		firebase.database().ref("Map/"+form.mName.value).once("value").then(function(snapshot){
    	if(snapshot.exists()) {
-    		sessionStorage.setItem("Duplicate", JSON.stringify(true));
-  		}else {
-  			sessionStorage.setItem("Duplicate", JSON.stringify(false));
-  			}});
-
-		if(JSON.parse(sessionStorage.getItem("Duplicate"))){
     		alert("Museum Already Exists");
     		sessionStorage.clear();
-  		}else{
+  		}else {
   			sessionStorage.clear();
-  			const museumMap = [];//create array for holding museumMap
-      	museumMap[0] = {layout: [0], fInfo: [{eName:" ", location:" ",eEd: " ", floorNum: " ",eInfo: " ", tile: 0},], images: [""],};// initialize musuem map with info template
-      	sessionStorage.setItem("rFloors", JSON.stringify(form.floors.value));// set what floor we are at in the input stage
-      	sessionStorage.setItem(form.mName.value, JSON.stringify(museumMap));// initialize hash map to hold map data
-      	sessionStorage.setItem("mInfo", JSON.stringify({mName: form.mName.value, numFloors: form.floors.value,}));
-      	window.open('floorPlan.html');// open next page
-      	window.close();// close window as it is no longer needed
-      }
+         const museumMap = [];//create array for holding museumMap
+         museumMap[0] = {layout: [0], fInfo: [{eName:" ", location:" ",eEd: " ", floorNum: " ",eInfo: " ", tile: 0},], images: [""],};// initialize musuem map with info template
+         sessionStorage.setItem("rFloors", JSON.stringify(form.floors.value));// set what floor we are at in the input stage
+         sessionStorage.setItem(form.mName.value, JSON.stringify(museumMap));// initialize hash map to hold map data
+         sessionStorage.setItem("mInfo", JSON.stringify({mName: form.mName.value, numFloors: form.floors.value,}));
+         window.open('floorPlan.html');// open next page
+         window.close();// close window as it is no longer needed
+  			}});
    }else {
    	alert("Floor limit exceeded");
    }
+   event.preventDefault();
 };
 
 
