@@ -130,11 +130,16 @@ document.getElementById("floorPrompt").innerHTML = "Input Layout For Floor: " + 
   	drawMap();
   };
 
+  const isMobile = navigator.userAgentData.mobile;
+
   window.addEventListener("resize", resize, {passive:true});
   context.canvas.addEventListener("mousemove", controller.move);
   context.canvas.addEventListener("touchmove", controller.move, {passive:true});
-  context.canvas.addEventListener("touchstart", controller.move, {passive:true});
+  if (isMobile) {
+  context.canvas.addEventListener("touchend", changeColor);
+  } else {
   context.canvas.addEventListener("click", changeColor);
+  }
   resize();
 
   window.requestAnimationFrame(loop);
