@@ -98,8 +98,13 @@ const firebaseConfig = {
 													var data = snapshot.val();// get javascript value of snapshot
 													sessionStorage.setItem(name, JSON.stringify(data.map));// store map in local storage
 													sessionStorage.setItem("mInfo", JSON.stringify({mName: name}));// store map name in loacal storage
-													window.open("Viewer.html");// open map viewer
-													window.close();// close search window
+													const isMobile = navigator.userAgentData.mobile;
+													if (isMobile) {
+														window.location.href = "Viewer.html";
+													} else {
+													  window.open("Viewer.html");// open map viewer
+													  window.close();// close search window
+													}
 													});
 													})// on click load map info														
 				p.appendChild(x);
