@@ -18,11 +18,12 @@ const firebaseConfig = {
 
   const cookie_Email = getemailFromCookie();
   const curr_adminStatus = checkAdminStatus();
-
+	logout();
 
   if(document.getElementById("finish")){
   	document.getElementById("finish").addEventListener("click", submitMap);
   }
+
 
   function submitMap(e) {
   	e.preventDefault();
@@ -195,20 +196,23 @@ loginButton.addEventListener("click", (e)=>{  // LISTENS TO THE SIGN IN BUTTON
 	const password = document.getElementById('pass').value;
 	login(email,password);
 
+
 });
 //--------SIGN OUT BUTTON LISTENER
 const signOut = document.getElementById("signOutButton");
 signOut.addEventListener("click", (e)=>{  // LISTENS TO THE SIGN IN BUTTON
 	e.preventDefault();
 	logout();
+	location.reload();
 	});
-/**
+
 const adminForm = document.querySelector('.admin-actions');
 adminForm.addEventListener('submit',(e) =>{
 	e.preventDefault();
-	const adminEmail = document.querySelector('#admin-email').value;
+	const adminEmail = document.getElementById('admin-email').value;
+	setAdminStatus(adminEmail)
 
-})**/
+})
 /// ------------------ACTION LISTENERS END ----------------------------------------
 
 function setAdminStatus(user) {
@@ -293,11 +297,15 @@ function login(email, password) {
 					//TODO: CHECK IF PASSWORD IS MATCHING
 					if (compareString(password, pass) === 0) {
 						console.log("correct pass")
-						userRef.once('')
+						//userRef.once('')
 						document.cookie = "email=" + email;
 						console.log("signed in as : ")
 						console.log(document.cookie)
 
+						if(snapshot.val().adminStatus ==='1'){
+							console.log("status" +snapshot.val().adminStatus)
+							document.getElementById("admin-actions").style.display = 'block'
+						}
 					} else {
 						// password or email incorrect
 						console.log("wrong pass")
@@ -324,7 +332,6 @@ function logout(){
 
 	var x = getemailFromCookie();
 	document.cookie = "email="+'';
-	console.log("user :" + x + " is logged out ")
 
 	var t = getemailFromCookie()
 	console.log(t);
